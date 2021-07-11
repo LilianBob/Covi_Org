@@ -1,65 +1,70 @@
 {% extends "base.html" %}
 {% block title %} 
-{{ user.first_name }}'s {{ history }}
+{{ history }}
 {% endblock %}
 
 {% block content%} 
 <div class="container" id="wrapper">
     <div class="row">
         <div class="col align-self-center">
-            <div class="card" style="width:100%;">
+            <div class="card" style="width:50%; margin:auto">
                 <div class="card-body">
                     <p class= "card-title"><h3> Personal Profile </h3></p>
-                    <p class="card-text"><span> {{ user.first_name }} {{ user.last_name }} </span></p>
-                    <p class="card-text"> {{ user.birth_date }} </p>
-                    <p class="card-text"> {{ user.email}}</p>
-                    <p class="card-text"> <span> {{ user.created_at }} </span></p> <br>
-                    <p><a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit Your Profile </a></p>
-                    <p><a href="/password_change" class="btn btn-warning"> Change your password </a></p>
-                    <p><a href="/delete_profile" class="btn btn-warning"> Delete account </a></p>
+                    <p class="card-text"><span> ID: {{ user.id }} </span></p>
+                    <p class="card-text"> Email: {{ user.email }}</p>
+                    <p class="card-text"> Birth Date: {{ user.date_of_birth }} </p>
+                    <p class="card-text"> <span> Account created on: {{ user.created_at }} </span></p>
+                    <p class="card-text"> <span> Last log in: {{ user.last_login }} </span></p>
+                    <p class="card-text">
+                        <a href="/files/{{ user.id }}" class="btn btn-primary"> Upload and view files </a> 
+                        <a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }} </a>
+                    </p> 
+                    <p>
+                        <a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit profile </a>
+                        <a href="/password_change" class="btn btn-warning"> Change password </a>
+                        <a href="/delete_profile" class="btn btn-warning"> Delete account </a>
+                    </p><br>
                 </div>
-            </div>
-        </div>
-        <div class="col align-self-center"> 
-            <div class="card" style="width:100%;">
-                <div class="card-body">
-            {% if user.vaccineResponses %}
-                {% for vaccineResponse in all_vaccineResponses %}
-                    <p class="card-title"> Vaccine Report </p>
-                    <p class="card-text"><b> {{ vaccineResponse.created_at }} </b></p>
-                    <ul>
-                        <li><span>{{ vaccineResponse.vaccine_type }}, {{ vaccineResponse.vaccine_dose}} dose adminstered @{{ vaccineResponse.vaccine_location }}</span></li>
-                        <li><span> Experienced {{ vaccineResponse.vaccine_illness }} following vaccine receipt</span></li>
-                    </ul>
-                {% endfor %}
-            {% else %} 
-                    <p class="card-title"> No reports to show! </p>
-            {% endif %}
-                </div>
-                <p class="card-text"><a href="/files/{{ user.id }}" class="btn btn-primary"> Upload and view files </a></p> 
-                <p class="card-text"><a href="/feed" class="btn btn-primary"> Updates on Covid-19 </a></p> 
             </div>
         </div>
     </div>
-    <hr>
     <div class="row">
         <div class="col align-self-center">
             <div class="card scrollable" style="width:100%;">
                 <div class="card-body">
-            {% if user.screenAnswers %} 
-                {% for screenAnswer in all_screenAnswers %}
-                    <p class="card-title"> Covid-19 Screening Responses </p>
+                {% if user.screenAnswers %} 
+                    <p class="card-title"> Covid-19 Screen Responses: </p>
                     <ul>
-                        <li><span> Replied "{{ screenAnswer.answer }}" on {{ screenAnswer.created_at }}</span></li>
+                    {% for screenAnswer in all_screenAnswers %}
+                        <li><span> Replied " {{ screenAnswer.answer }} " on {{ screenAnswer.created_at }}</span></li>
+                    {% endfor %}
                     </ul>
-                {% endfor %}
-            {% else %} 
+                {% endif %}
+                {% if user.screeAnswers not in request.session %} 
                     <p class="card-title"> You have not screened for Covid-19 yet! </p>
-            {% endif %}
+                {% endif %}
                 </div>
             </div>
         </div>
-        
+        <div class="col align-self-center"> 
+            <div class="card scrollable" style="width:100%;">
+                <div class="card-body">
+                {% if user.vaccineResponses %}
+                    <p class="card-title"> Vaccine Report: </p>
+                    <p class="card-text"><b> {{ vaccineResponse.created_at }} </b></p>
+                    <ul>
+                    {% for vaccineResponse in all_vaccineResponses %}
+                        <li><span>{{ vaccineResponse.vaccine_type }}, {{ vaccineResponse.vaccine_dose}} dose adminstered @{{ vaccineResponse.vaccine_location }}</span></li>
+                        <li><span> Experienced {{ vaccineResponse.vaccine_illness }} following vaccine receipt</span></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if user.screeAnswers not in request.session %} 
+                    <p class="card-title"> No reports to show! </p>
+                {% endif %}
+                </div>
+            </div>
+        </div> 
     </div>
 </div>
 {% endblock %}

@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-
+from .models import User, FileUpload, ScreenAnswer, VaccineResponse
 from .forms import UserAdminCreationForm, UserAdminChangeForm
+
 
 User = get_user_model()
 
@@ -31,3 +32,12 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+@admin.register(FileUpload)
+class FileUpload(admin.ModelAdmin):
+    list_display=("file", "user")
+@admin.register(VaccineResponse)
+class VaccineResponseAdmin(admin.ModelAdmin):
+    list_display=("vaccine_type", "vaccine_dose", "vaccine_location", "vaccine_illness", "user")
+@admin.register(ScreenAnswer)
+class ScreenAnswerAdmin(admin.ModelAdmin):
+    list_display=("answer", "user")

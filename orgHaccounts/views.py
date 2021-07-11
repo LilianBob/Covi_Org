@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
 from .forms import RegisterForm, AuthenticationForm
 from django.contrib import messages
+from .models import FileUpload, User, ScreenAnswer, VaccineResponse
 
 User= get_user_model()
 
@@ -55,16 +56,95 @@ def dashboard(request):
     "Welcome": "Welcome!"
     }
     return render(request, 'dashboard/dash.html', context)
+
+def screen(request):
+    context = {
+        "yes": "Yes",
+        "no": "No",
+    }
+    return render (request, 'dashboard/screen.html', context)
+def screened(request):
+    if request.method == "POST":
+        answer= request.POST['answer']
+        user= request.user
+        screenAnswer= ScreenAnswer.objects.create(answer=answer, user=user)
+        request.session['screenAnswer_id'] = screenAnswer.id
+        if answer == 'No':
+            messages.success(request, "You are fit to work today!")
+            return redirect("/dashboard")
+        if answer != 'No':
+            messages.success(request, "DO NOT come to the workplace today. Stay home until you report no symptoms")
+            return redirect("/dashboard")
+        return redirect("/dashboard")
+
+def vaccine_reporting(request):
+    if request.method == "GET":
+        r= requests.get("https://www.vaccinespotter.org/api/v0/states/WA.json")
+        r=r.json()
+        features= r['features']
+    context={
+        "location":features,
+        "pfizer": "Pfizer-BioNTech",
+        "moderna": "Moderna",
+        "janssen": "Johnson & Johnson’s Janssen",
+        "unknown": "Unknown",
+        "1st": "1st",
+        "2nd": "2nd",
+        "3rd": "3rd",
+    }
+    return render (request, 'dashboard/vaccine_report.html', context)
+def vreported(request):
+    if request.method== "POST":
+        vaccine_type= request.POST['vaccine_type']
+        vaccine_dose= request.POST['vaccine_dose']
+        vaccine_location= request.POST['vaccine_location']
+        vaccine_illness= request.POST['vaccine_illness']
+        user= request.user
+        vaccineResponse= VaccineResponse.objects.create(vaccine_type=vaccine_type, vaccine_dose=vaccine_dose, vaccine_location=vaccine_location, vaccine_illness=vaccine_illness, user=user)
+        request.session['vaccineResponse_id'] = vaccineResponse.id
+        messages.success(request, "You have successfully submitted your report!")
+        return redirect("/dashboard")
+        
+def files(request, user_id):
+    user= request.user
+    all_fileUploads= FileUpload.objects.filter(id=user_id)
+    context= {
+        "user":user,
+        "all_fileUploads":all_fileUploads,
+    }
+    return render (request, 'dashboard/files.html', context)
+def file_upload(request, user_id):
+    if request.method=="POST":
+        if request.FILES == None:
+            messages.info (request, "No docs uploaded!")
+        user= request.user
+        new_file= FileUpload(file=request.FILES['doc'], user=user)
+        request.session['file_id'] = new_file.id
+        new_file.save()
+        messages.success(request, "File successfully uploaded!")
+        return redirect(f"/files/{ user_id}")
+    return redirect(f"/files/{ user_id}")
+
+def profile(request, user_id):
+    user= request.user
+    all_vaccineResponses= VaccineResponse.objects.filter(id=user_id)
+    all_screenAnswers= ScreenAnswer.objects.filter(id=user_id)
+    context={
+        "history": "Personal Information",
+        "health_condition": "Covid-19",
+        "user": user,
+        "all_vaccineResponses": all_vaccineResponses,
+        "all_screenAnswers": all_screenAnswers,
+    }
+    return render(request, 'dashboard/profile.html', context)
 def edit_personalInfo(request, user_id):
-    user=User.objects.get(id=user_id)
+    user=request.user
     context={
         "user":user
     }
     return render(request, 'dashboard/editPersonalinfo.html', context)
 def edited_personalInfo(request, user_id):
-    edit_user = User.objects.get(id=user_id)
-    edit_user.first_name = request.POST['first_name']
-    edit_user.last_name = request.POST['last_name']
+    edit_user = request.user
     edit_user.birth_date = request.POST['birth_date']
     edit_user.email = request.POST['email']
     edit_user.save()
@@ -74,80 +154,3 @@ def delete_profile(request, user_id):
     d = User.objects.get(id=user_id)
     d.delete()
     return redirect('/')
-def screen(request):
-    context = {
-        "yes": "Yes",
-        "no": "No",
-    }
-    return render (request, 'dashboard/screen.html', context)
-# def screened(request):
-#     if request.method == "POST":
-#         answer= request.POST['answer']
-#         user= User.objects.get(id=request.session['user_id'])
-#         screenAnswer= ScreenAnswer.objects.create(answer=answer, user=user)
-#         request.session['screenAnswer_id'] = screenAnswer.id
-#         if answer == 'No':
-#             messages.success(request, "You are fit to work today! You may want to report your vaccine status next...")
-#             return redirect("/dashboard")
-#         if answer != 'No':
-#             messages.success(request, "DO NOT come to the workplace today. Stay home until you report no symptoms")
-#             return redirect("/dashboard")
-#         return redirect("/dashboard")
-# def vaccine_reporting(request):
-#     if request.method == "GET":
-#         r= requests.get("https://www.vaccinespotter.org/api/v0/states/WA.json")
-#         r=r.json()
-#         features= r['features']
-#     context={
-#         "location":features,
-#         "pfizer": "Pfizer-BioNTech",
-#         "moderna": "Moderna",
-#         "janssen": "Johnson & Johnson’s Janssen",
-#         "unknown": "Unknown",
-#         "1st": "1st",
-#         "2nd": "2nd",
-#         "3rd": "3rd",
-#     }
-#     return render (request, 'dashboard/vaccine_report.html', context)
-# def vreported(request):
-#     if request.method== "POST":
-#         vaccine_type= request.POST['vaccine_type']
-#         vaccine_dose= request.POST['vaccine_dose']
-#         vaccine_location= request.POST['vaccine_location']
-#         vaccine_illness= request.POST['vaccine_illness']
-#         user= User.objects.get(id=request.session['user_id'])
-#         vaccineResponse= VaccineResponse.objects.create(vaccine_type=vaccine_type, vaccine_dose=vaccine_dose, vaccine_location=vaccine_location, vaccine_illness=vaccine_illness, user=user)
-#         request.session['vaccineResponse_id'] = vaccineResponse.id
-#         messages.success(request, "You have successfully submitted your report!")
-#         return redirect("/dashboard")
-# def files(request, user_id):
-#     user= User.objects.get(id=request.session['user_id'])
-#     all_fileUploads= FileUpload.objects.filter(id=user_id)
-#     context= {
-#         "user":user,
-#         "all_fileUploads":all_fileUploads,
-#     }
-#     return render (request, 'dashboard/files.html', context)
-# def file_upload(request, user_id):
-#     if request.method=="POST":
-#         if request.FILES == None:
-#             return HttpResponse ("<h1> No docs uploaded! </h1>")
-#         user= User.objects.get(id=user_id)
-#         new_file= FileUpload(file=request.FILES['doc'], user=user)
-#         new_file.save()
-#         messages.success(request, "File successfully uploaded!")
-#         # return redirect(f"/files/{ user_id}")
-#     return redirect(f"/files/{ user_id}")
-# def profile(request, user_id):
-#     user= User.objects.get(id=request.session['user_id'])
-#     if 'user_id' not in request.session:
-#         return HttpResponse ("<h1> Login to view your history </h1>")
-#     all_vaccineResponses= VaccineResponse.objects.filter(id=user_id)
-#     all_screenAnswers= ScreenAnswer.objects.filter(id=user_id)
-#     context={
-#         "user":user,
-#         "history": "Personal Information",
-#         "all_vaccineResponses": all_vaccineResponses,
-#         "all_screenAnswers": all_screenAnswers,
-#     }
-#     return render(request, 'dashboard/profile.html', context)

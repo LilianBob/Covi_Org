@@ -50,6 +50,8 @@ class OrgHUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
+    created_at= models.DateTimeField(auto_now_add=True, null=True)
+    last_login= models.DateTimeField(auto_now=True, null=True)
 
     objects = OrgHUserManager()
 
