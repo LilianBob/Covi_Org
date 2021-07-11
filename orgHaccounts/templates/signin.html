@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %} 
+Signin
+{% endblock %}
+
+{% block content%} 
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="form-area login-form">
+                <div class="form-input">
+                    <p class="display-4"> Login </p>
+                    <form action="/logged_in" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="email"class= "col-lg-4" > Email: </label>
+                                    <input type="text" name="email" id="email" class="form-control col-lg-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="password" class= "col-lg-4"> Password: </label>
+                                    <input type="password" name="password" id="psd" class="form-control col-lg-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="myform-button">
+                                    <button class="btn btn-primary" type="submit" value="Login"> Login </button>
+                                </div>    
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+                <br>
+                <div class="form-content">
+                    <p><small> Forgot password? </small></p>
+                    <p><span>
+                        <a href="/password_reset" class="btn btn-primary"> Reset password </a>
+                    </span><p> 
+                </div>
+                <div class="form-content">
+                    <p><small>Not yet registered?</small></p>
+                    <p><span>
+                        <a href="/register" class="btn btn-primary"> Signup</a>
+                        <a href="/feed" class="btn btn-primary"> Covid-19 Updates</a>
+                    </span><p> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

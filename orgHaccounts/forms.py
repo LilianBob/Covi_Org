@@ -1,16 +1,23 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 User = get_user_model()
 
-class RegisterForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField()
+    date_of_birth = forms.DateField()
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
 
     class Meta:
         model = User
-        fields = ['email', 'date_of_birth']
+        fields = ['email', 'date_of_birth', 'password1', 'password2']
+        widgets = {
+            'email': forms.TextInput(attrs={'class': 'form-control col-lg-6'}),
+            'date_of_birth': forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6',}),
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

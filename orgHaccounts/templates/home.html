@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} 
+Home
+{% endblock %}
+
+{% block content%} 
+
+<div class="jumbotron-fluid">
+    <div class="container" id="wrapper">
+        <div class="row">
+            <div class="col">
+                <p class="display-4"><b> OrgHealth </b></p>
+        <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1> {{ health_condition }}</h1>
+                <h2><a href="/login"> {{ required_action }} &#8594;</a></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="lead"><a href="/login" class="btn btn-primary"> Get Started! </a></p>
+                <p class="lead"><a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }}</a></p>
+            </div>   
+        </div>
+    </div>
+</div>
+
+{% endblock %}

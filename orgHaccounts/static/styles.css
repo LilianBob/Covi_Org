@@ -1,0 +1,113 @@
+.jumbotron-fluid{ 
+    position: relative; 
+    width: 80%;
+    display: block;
+    margin:auto;
+    align-items: center;
+}
+    
+.jumbotron-fluid:before{  
+    content: "";
+    background: url("covi_virus.jpg") no-repeat center center;
+    background-size: contain;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+}
+
+.jumbotron-fluid h2, .jumbotron-fluid h3, .jumbotron-fluid p{
+    position:relative
+}
+h1, h2, h3, a{
+    text-align: center;
+}
+h1 a, h2 a{
+    color: rgb(46, 44, 44);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.jumbotron-fluid .container .row{
+    padding:40px;
+}
+.navbar-nav{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar-nav .nav-item a{
+    font-family: cursive;
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.container{
+    display: block;
+    margin:auto;
+    padding:20px;
+}
+#homeCard{
+    margin:auto;
+}
+ul{
+    list-style-type: none;
+}
+.col .scrollable{
+    height: 200px;
+    overflow-y: auto;
+} 
+hr{
+    border: 2px solid rgb(97, 94, 94);
+    width: 25%;
+    float: left;
+}
+#dash{
+    display: flex;
+    padding-top: 50px;
+
+}
+.card{
+    display:block;
+    padding:5px;
+}
+.row{
+    padding: 10px;
+}
+.card-body a, .card-title p, .card-text a, .card .btn{
+    margin-bottom: 3px;
+    text-align: center;
+    align-content: center;
+}
+.card-body #status{
+    overflow-y: auto;
+}
+#dash #profileCards{
+    width: 30rem;
+}
+#dash .col{
+    padding-bottom: 5px;
+}
+#statuswrapper{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn .btn-default{
+    color: black;
+    text-align: center;
+    padding:2em;
+    background-color: #1e96f1;
+}
+.btn .btn-primary{
+    text-align: center;
+    padding:2em;
+}
+p .btn{
+    align-content: center;
+    text-align: center;
+}
+    

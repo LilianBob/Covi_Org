@@ -1,0 +1,31 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index),
+    # path('login', views.signin),
+    # path('logged_in', views.login),
+    # path('register', views.signup),
+    # path('registered', views.register),
+    # path('logout', views.logout),
+    # path('dashboard', views.dashboard),
+    # path('screen', views.screen),
+    # path('screened', views.screened),
+    # path('vaccine_reporting', views.vaccine_reporting),
+    # path('vreported', views.vreported),
+    # path('files/<int:user_id>', views.files),
+    # path('file_upload/<int:user_id>', views.file_upload),
+    # path('profile/<int:user_id>', views.profile),
+    # path('edit/<int:user_id>', views.edit_personalInfo),
+    # path('delete_profile/<int:user_id>', views.delete_profile),
+    # path('delete_post/<int:newsPost_id>', views.delete_post),
+    # path('edited/<int:user_id>', views.edited_personalInfo),
+    # path('password_change/', views.password_change),
+    # path('feed', views.feed),
+    # path('newsPost', views.newsPost),
+    # path('add_newsPost', views.add_newsPost),
+    # path('news_postContent/<int:newsPost_id>', views.news_content),
+    # path('like/<int:newsPost_id>', views.add_like),
+    # path('comment/<int:newsPost_id>', views.add_comment),
+    # path('comments/<int:newsPost_id>', views.comments),
+]
