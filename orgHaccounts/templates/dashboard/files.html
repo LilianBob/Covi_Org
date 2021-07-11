@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %} 
+Upload files to Dashbord
+{% endblock %}
+
+{% block content%} 
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="display-4"> Files </p>
+            <form action="/file_upload/{{ user.id }}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %} 
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="doc"class= "col-lg-4"> Upload file: </label>
+                            <input type="file" name="doc" id="doc" class="form-control col-lg-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit"> Upload </button>
+                        </div>    
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 50%;">
+                <div class="card-body">
+            {% if user.fileUploads %}
+                {% for fileUpload in all_fileUploads %}
+                    <p class="card-title"> Uploaded files </p>
+                    <a href="{{ fileUpload.file.url }}" target="_blank">
+                        <span>{{ fileUpload.file }}</span>
+                    </a>
+                {% endfor %}
+            {% else %}
+                    <p class="card-title"> No files to show!</p>
+            {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 50%;">
+                <div class="card-body">
+                    <p class="card-text"> Have questions about Covid-19? </p>                     
+                    <a href="/feed" class="btn btn-primary"> Get updates </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

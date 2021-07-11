@@ -87,7 +87,7 @@ DATABASES = {
 Authentication_Backends=[
     'orgHaccounts.backends.EmailBackend', 
     'django.contrib.auth.backends.ModelBackend']
-    
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -131,5 +131,5 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL ='/'
+LOGIN_REDIRECT_URL ='/dashboard'
 LOGOUT_REDIRECT_URL= '/'

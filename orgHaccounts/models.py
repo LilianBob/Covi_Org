@@ -77,3 +77,24 @@ class OrgHUser(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
+
+class ScreenAnswer(models.Model):
+    answer= models.CharField(max_length=25)
+    user= models.ForeignKey(User, related_name="screenAnswers", on_delete=models.CASCADE)
+    created_at= models.DateTimeField(auto_now_add=True, null=True)
+    updated_at= models.DateTimeField(auto_now=True, null=True)
+
+class VaccineResponse(models.Model):
+    vaccine_type= models.CharField(max_length=25) 
+    vaccine_dose= models.CharField(max_length=25) 
+    vaccine_location= models.CharField(max_length=25)
+    vaccine_illness= models.TextField(max_length=1000)
+    user= models.ForeignKey(User, related_name="vaccineResponses", on_delete=models.CASCADE)
+    created_at= models.DateTimeField(auto_now_add=True, null=True)
+    updated_at= models.DateTimeField(auto_now=True, null=True)
+
+class FileUpload(models.Model):
+    file= models.FileField(upload_to="user_docs")
+    user= models.ForeignKey(User, related_name="fileUploads", on_delete=models.CASCADE)
+    created_at= models.DateTimeField(auto_now=True)
+    updated_at= models.DateTimeField(auto_now_add=True)

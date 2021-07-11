@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} 
+Dashboard
+{% endblock %}
+
+{% block content %} 
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            <h1> {{ user.email }} </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card" id="profileCards">
+                <div class="card-body">
+                    <p><a href="/profile/{{ user.id }}" class="btn btn-primary"> Profile </a> </p>
+                    <p><a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit Your Profile </a></p>
+                    <p><a href="/feed" class="btn btn-primary"> Updates on Covid-19 </a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" id="profileCards">
+                <div class="card-body">
+                    <p><a href="/screen" class="btn btn-primary"> Daily Covid-19 screening</a></p>
+                    <p><a href="/vaccine_reporting" class="btn btn-primary"> Covid-19 vaccine reporting </a></p>
+                    <p><a href="/files/{{ user.id }}" class="btn btn-primary"> Upload Covid-19_related documents </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

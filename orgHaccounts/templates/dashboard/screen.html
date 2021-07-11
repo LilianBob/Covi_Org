@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %} 
+Daily Covid-19 Screening
+{% endblock %}
+{% block content%} 
+
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 50rem;">
+                <div class="card-body">
+                    <h2 class="card-title"> Have you experienced any of the following symptoms in the past 48 hours:</h2>
+                    <ul class="card-text">
+                        <li> Fever or chills </li>
+                        <li> Shortness of breath or difficulty breathing </li>
+                        <li> Fatigue </li>
+                        <li> Muscle or body aches </li>
+                        <li> Headache </li>
+                        <li> New loss of taste or smell </li>
+                        <li> Sore throat </li>
+                        <li> Congestion or runny nose </li>
+                        <li> Nausea or Vomiting </li>
+                        <li> Diarrhea</li>    
+                    </ul>
+                    <br>                    
+                    <form action="/screened" method="POST" class="form">
+                        {% csrf_token %}
+                        <label for="answer"> Choose Yes or No: </label>
+                        <select name="answer" type="select" class="mdb-select" id="choicefields">
+                            <option >--SELECT--</option>
+                            <option value="{{ yes }}"> {{ yes }} </option>
+                            <option value="{{ no }}"> {{ no }} </option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
