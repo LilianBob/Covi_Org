@@ -6,8 +6,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 User = get_user_model()
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField()
-    date_of_birth = forms.DateField()
+    email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6'}),)
+    date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6',}),)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
 
@@ -33,6 +33,17 @@ class RegisterForm(UserCreationForm):
         if password1 is not None and password1 != password2:
             self.add_error("password2", "The given  passwords do not match!")
         return cleaned_data
+
+class AuthenticationForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={'class': 'form-control col-lg-6','type':'text','name': 'email'}), 
+        label='Email address')
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class':'form-control col-lg-6','type':'password', 'name': 'password',}),
+        label='Password')
+    class Meta:
+        model = User
+        fields = ['email', 'password']
 
 class UserAdminCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)

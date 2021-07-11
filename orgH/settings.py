@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'orgHaccounts',
     'crispy_forms',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'orgHaccounts.OrgHUser'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,8 +84,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
+Authentication_Backends=[
+    'orgHaccounts.backends.EmailBackend', 
+    'django.contrib.auth.backends.ModelBackend']
+    
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
