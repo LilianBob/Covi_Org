@@ -49,7 +49,7 @@ def login(request):
 def logout(request):
     OHlogout(request)
     messages.info(request, "You have been successfully logged-out")
-    return redirect("/")
+    return redirect("/login")
 
 def dashboard(request):
     context = {

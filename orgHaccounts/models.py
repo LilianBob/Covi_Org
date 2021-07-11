@@ -44,6 +44,12 @@ class OrgHUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    cover = models.ImageField(
+        upload_to='images/',
+        verbose_name='profile picture',
+        null=True,
+        blank=True,
+        )
     date_of_birth = models.DateField(
         verbose_name='birth date',
     )

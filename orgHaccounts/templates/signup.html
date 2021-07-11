@@ -16,7 +16,7 @@ Signup
     <div class="row">
         <div class="col">
             <p class="display-4"> Signup </p>
-            <form class="RegisterForm" method="POST">
+            <form class="RegisterForm" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="row">
