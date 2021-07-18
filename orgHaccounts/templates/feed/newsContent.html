@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} 
+Covid-19  News: {{ newsPost.title }}
+{% endblock %}
+{% block content%} 
+
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            {% for newsPost in  all_newsPosts %} 
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <p class="card-text">  {{ newsPost.postContent }}</p> <br>
+                    <div class="card" style="width: 25%">
+                    {% if 'user_id' in request.session %}
+                        <form action="/comment/{{ newsPost.id }}" method="post" name="comment" id="commentform">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="newsPost_comment"> Leave a comment:</label>
+                                <textarea name="newsPost_comment" class="form-control" id="newsPost_comment" rows="4"> Comment </textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary"> Submit </button>
+                        </form>
+                    {% endif %}
+                        <p> <span><a href="/feed"> Return to News Post </a> </span></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

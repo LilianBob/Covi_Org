@@ -14,14 +14,17 @@ Edit Personal Information
     </div>
     <div class="row">
         <div class="col">
-            <p class="display-4"> Edit Profile </p>
+            <p class="display-4"> Delete User Account </p>
             <form class="OHUserUpdateForm" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
+                <p>Are you sure you want to delete your account?  This will permanently delete your
+                profile and any content you have generated.</p>
                 {{ form|crispy }}
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit"> Update </button>
+                            <button class="btn btn-warning" type="submit"> Delete </button>
+                            <a class="btn btn-primary" style="margin:auto;" href="/profile/{{ user.id }}"> Cancel </a>
                         </div>    
                     </div>
                 </div>

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, FileUpload, ScreenAnswer, VaccineResponse
+from .models import User, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
 
@@ -41,3 +41,12 @@ class VaccineResponseAdmin(admin.ModelAdmin):
 @admin.register(ScreenAnswer)
 class ScreenAnswerAdmin(admin.ModelAdmin):
     list_display=("answer", "user")
+@admin.register(NewsPost)
+class NewsPostAdmin(admin.ModelAdmin):
+    list_display=("intro", "title", "description", "postContent", "creator")
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display=("newsPost", "alreadyLiked", "user")
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display=("newsPost_comment", "newsPost", "user")

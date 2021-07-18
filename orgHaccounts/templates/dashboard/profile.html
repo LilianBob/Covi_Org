@@ -22,7 +22,7 @@
                     <p>
                         <a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit profile </a>
                         <a href="/password_change" class="btn btn-warning"> Change password </a>
-                        <a href="/delete_profile" class="btn btn-warning"> Delete account </a>
+                        <a href="/delete_profile/{{ user.id }}" class="btn btn-warning"> Delete account </a>
                     </p><br>
                 </div>
             </div>
@@ -46,26 +46,24 @@
     </div>
     <div class="row">
         <div class="col align-self-center">
+            {% if user.screenAnswers %} 
             <div class="card scrollable" style="width:100%;">
                 <div class="card-body">
-                {% if user.screenAnswers %} 
                     <p class="card-title"> Covid-19 Screen Responses: </p>
                     <ul>
                     {% for screenAnswer in all_screenAnswers %}
                         <li><span> Replied " {{ screenAnswer.answer }} " on {{ screenAnswer.created_at }}</span></li>
                     {% endfor %}
                     </ul>
-                {% endif %}
-                {% if user.screeAnswers not in request.session %} 
-                    <p class="card-title"> You have not screened for Covid-19 yet! </p>
-                {% endif %}
                 </div>
             </div>
+            {% else %} <p class="card-title"> You have not screened for Covid-19 yet! </p>
+            {%  endif %}
         </div>
-        <div class="col align-self-center"> 
+        <div class="col align-self-center">
+            {% if user.vaccineResponses %}
             <div class="card scrollable" style="width:100%;">
                 <div class="card-body">
-                {% if user.vaccineResponses %}
                     <p class="card-title"> Vaccine Report: </p>
                     <p class="card-text"><b> {{ vaccineResponse.created_at }} </b></p>
                     <ul>
@@ -74,12 +72,10 @@
                         <li><span> Experienced {{ vaccineResponse.vaccine_illness }} following vaccine receipt</span></li>
                     {% endfor %}
                     </ul>
-                {% endif %}
-                {% if user.screeAnswers not in request.session %} 
-                    <p class="card-title"> No reports to show! </p>
-                {% endif %}
                 </div>
             </div>
+            {% else %} <p class="card-title"> No reports to show! </p>
+            {% endif %}
         </div> 
     </div>
 </div>

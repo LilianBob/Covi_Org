@@ -45,7 +45,7 @@ class OrgHUser(AbstractBaseUser):
         unique=True,
     )
     cover = models.ImageField(
-        upload_to='images/',
+        upload_to='profile_images/',
         verbose_name='profile picture',
         null=True,
         blank=True,
@@ -88,7 +88,7 @@ class OrgHUser(AbstractBaseUser):
 
 class ScreenAnswer(models.Model):
     answer= models.CharField(max_length=25)
-    user= models.ForeignKey(User, related_name="screenAnswers", on_delete=models.CASCADE)
+    user= models.ForeignKey(User, related_name="screenAnswers", on_delete=models.SET_NULL, null=True)
     created_at= models.DateTimeField(auto_now_add=True, null=True)
     updated_at= models.DateTimeField(auto_now=True, null=True)
 
@@ -97,7 +97,7 @@ class VaccineResponse(models.Model):
     vaccine_dose= models.CharField(max_length=25) 
     vaccine_location= models.CharField(max_length=25)
     vaccine_illness= models.TextField(max_length=1000)
-    user= models.ForeignKey(User, related_name="vaccineResponses", on_delete=models.CASCADE)
+    user= models.ForeignKey(User, related_name="vaccineResponses", on_delete=models.SET_NULL, null=True)
     created_at= models.DateTimeField(auto_now_add=True, null=True)
     updated_at= models.DateTimeField(auto_now=True, null=True)
 
@@ -106,3 +106,37 @@ class FileUpload(models.Model):
     user= models.ForeignKey(User, related_name="fileUploads", on_delete=models.CASCADE)
     created_at= models.DateTimeField(auto_now=True)
     updated_at= models.DateTimeField(auto_now_add=True)
+
+class NewsPostManager(models.Manager):
+    def validate_newsPost(self, newsPost_description):
+        errors = {}
+        if len(newsPost_description) < 10:
+            errors['length'] = 'Posts must be at least 10 characters'
+        if len(newsPost_description) > 100:
+            errors['length'] = f"Posts must be less than 101 characters. Current is {len(newsPost_description)}"
+        return errors
+
+class NewsPost(models.Model):
+    intro = models.CharField(max_length=255)
+    newscover = models.ImageField(upload_to='news_images/')
+    title = models.CharField(max_length=255)
+    description= models.TextField()
+    likes = models.PositiveIntegerField(default=0)
+    user_likes = models.ManyToManyField(User, related_name='liked_newsposts')
+    postContent= models.TextField()
+    creator = models.ForeignKey(User, related_name='user_newsposts', on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    objects = NewsPostManager()
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="users", null=True)
+    newsPost = models.ForeignKey(NewsPost, on_delete=models.CASCADE, related_name="posts")
+    alreadyLiked = models.BooleanField(default=False)
+
+class Comment(models.Model):
+    newsPost_comment = models.CharField(max_length=255)
+    user = models.ForeignKey(User, related_name="comments", on_delete=models.SET_NULL, null=True)
+    newsPost = models.ForeignKey(NewsPost, related_name="comments", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)

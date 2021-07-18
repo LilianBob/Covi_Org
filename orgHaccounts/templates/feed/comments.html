@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} 
+{{ newsPost.title }}'s Comments
+{% endblock %}
+
+{% block content%} 
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    <div class="row">
+        <div class="col scrollable">
+            <div class="card" style="width:50%;">
+                <div class="card-body">
+                    <p class="card-title"> Comments</p>
+                {% for comment in newsPost.comments.all %}
+                    <ul>
+                        <li class="card-text" >
+                            {{ comment.user.first_name }} {{ comment.user.last_name }} commented: <br>
+                            {{comment.newsPost_comment}}
+                        </li>
+                    </ul>
+                {% endfor %}
+                    <p class="card-text"><span><a href="/feed"> Return to News Post </a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

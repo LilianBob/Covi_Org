@@ -35,20 +35,19 @@ Upload files to Dashbord
     </div>
     <div class="row">
         <div class="col">
+        {% if user.fileUploads %}
             <div class="card" style="width: 50%;">
                 <div class="card-body">
-            {% if user.fileUploads %}
                 {% for fileUpload in all_fileUploads %}
                     <p class="card-title"> Uploaded files </p>
                     <a href="{{ fileUpload.file.url }}" target="_blank">
                         <span>{{ fileUpload.file }}</span>
                     </a>
                 {% endfor %}
-            {% else %}
-                    <p class="card-title"> No files to show!</p>
-            {% endif %}
                 </div>
             </div>
+        {% else %} <p> No files to show!</p>
+        {% endif %}
         </div>
     </div>
     <div class="row">

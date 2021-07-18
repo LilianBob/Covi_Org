@@ -34,6 +34,20 @@ class RegisterForm(UserCreationForm):
             self.add_error("password2", "The given  passwords do not match!")
         return cleaned_data
 
+class OHUserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6', 'type':'text',}),)
+    cover = forms.ImageField(label= 'Profile picture', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
+    date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6', 'type':'Date','value': '{ user_date_of_birth }'}),)
+    
+    class Meta:
+        model=User
+        fields=['email', 'cover', 'date_of_birth']
+
+class UserDeleteForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [] 
+
 class AuthenticationForm(forms.Form):
     email = forms.EmailField(widget=forms.TextInput(
         attrs={'class': 'form-control col-lg-6','type':'text','name': 'email'}), 

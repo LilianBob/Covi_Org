@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} 
+Covid-19  News
+{% endblock %}
+{% block content%} 
+
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    {% if newsPosts %}
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card" style="width: 50rem;">
+                {% for newsPost in all_newsPosts %}
+                <p><b> {{ newsPost.intro }}</b></p>
+                <p> {{ newsPost.created_at }} </p>
+                <div class="card-body">
+                    <h5 class="card-title"> {{ newsPost.title }} </h5>
+                    <p class="card-text"> {{ newsPost.description }}</p> <br>
+                    <P class="card-text"><span><a href="/news_postContent/{{ newsPost.id }}"> Continue reading&rarr; </a></span></P> 
+                    {% if user in newsPost.user_likes.all %}
+                        <span><form action="/like/{{ newsPost.id }}" method="post" name="like" id="likeform">
+                            {% csrf_token %}
+                            <button type='like' name='like' value="{{ newsPost.id }}" class="btn btn-primary" disabled>
+                                <i class="bi bi-suit-heart-fill"></i> &nbsp; 
+                                <span> Likes &nbsp; {{ newsPost.user_likes.count }} </span>
+                            </button>
+                        </form></span>
+                    {% endif %}
+                    {% if user not in newsPost.user_likes.all %}
+                        <span><form action="/like/{{ newsPost.id }}" method="post" name="like" id="likeform">
+                            {% csrf_token %}
+                            <button type='like' name='like' value="{{ newsPost.id }}" class="btn btn-default">
+                                <i class="bi bi-suit-heart-fill"></i> &nbsp; 
+                                <span> Likes &nbsp; {{ newsPost.user_likes.count }} </span>
+                            </button>
+                        </form></span>
+                    {% endif %}</p>
+                    {% if newsPost.comments %}
+                        <p><span><a href="/comments/{{ newsPost.id }}"> Comments </a></span></p>
+                    {% endif %}
+                {% endfor %}
+                <p><a href="/newsPost"> Post an update </a></p> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %} <p><a href="/newsPost"> Post an update </a></p> 
+    {% endif %}
+    
+</div>
+{% endblock %}
