@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
+from .models import User, ProfileImage, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
 
@@ -13,17 +13,17 @@ admin.site.unregister(Group)
 class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
-    list_display = ['email', 'cover', 'date_of_birth', 'staff', 'admin']
+    list_display = ['email', 'date_of_birth', 'staff', 'admin']
     list_filter = ['admin']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth', 'cover,')}),
+        ('Personal info', {'fields': ('date_of_birth',)}),
         ('Permissions', {'fields': ('admin',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'cover', 'date_of_birth', 'password1', 'password2')}
+            'fields': ('email', 'date_of_birth', 'password1', 'password2')}
         ),
     )
     search_fields = ['email']
@@ -32,6 +32,9 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+@admin.register(ProfileImage)
+class ProfileImage(admin.ModelAdmin):
+    list_display=("cover", "user")
 @admin.register(FileUpload)
 class FileUpload(admin.ModelAdmin):
     list_display=("file", "user")

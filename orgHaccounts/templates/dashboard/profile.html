@@ -29,17 +29,17 @@
         </div>
         <div class="col align-self-center">
             <div class="card" style="width: 100%;">
-                {% if user.cover %}
+                {% if user.profileImage %}
                     {% load static %}
-                    <img class="card-img-top"  src="{{ user.cover.url }}" style="width: 100%; float:right;" alt="profile picture">
-                        <span>{{ user.cover }}</span>
+                    <img class="card-img-top"  src="{{ profileImage.cover.url }}" style="width: 100%; float:right;" alt="profile picture">
+                        <span>{{ profileImage.cover }}</span>
                 {% endif %}
-                {% if user.cover not in request.session %}
+                {% if user.profileImage not in request.session %}
                     {% load static %}
                     <img class="card-img-top" src="{% static 'kitty.jpg' %}" alt="profile picture">
                 {% endif %}
                 <div class="card-body">
-                    <p class="card-text"> Profile picture </p>
+                    <a class="card-text" href="/profile_picture/{{ user.id }}"> Update profile picture </p>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     </ul>
                 </div>
             </div>
-            {% else %} <p class="card-title"> No reports to show! </p>
+            {% else %} No reports to show!
             {% endif %}
         </div> 
     </div>

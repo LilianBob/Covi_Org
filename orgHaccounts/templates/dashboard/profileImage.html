@@ -15,14 +15,14 @@ Signup
     </div>
     <div class="row">
         <div class="col">
-            <p class="display-4"> Signup </p>
-            <form class="RegisterForm" method="POST">
+            <p class="display-4"> Update Profile Picture </p>
+            <form class="ProfileImageUpdateForm" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit"> Register </button>
+                            <button class="btn btn-primary" type="submit"> Upload picture </button>
                         </div>    
                     </div>
                 </div>

@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 import requests
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
-from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm
+from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, OHProfileUpdateForm
 from django.contrib import messages
-from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
+from .models import FileUpload, ProfileImage, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
 
 User= get_user_model()
 
@@ -20,7 +20,7 @@ def register(request):
         context = {'form': form}
         return render(request, 'signup.html', context)
     if request.method == 'POST':
-        form  = RegisterForm(request.POST)
+        form  = RegisterForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('email')
@@ -38,7 +38,6 @@ def login(request):
             password = request.POST['password']
             user = OHauthenticate(email=email, password=password)
             if user is not None and user.is_active:
-                # if user.is_active:
                 OHlogin(request, user)
                 return redirect('/dashboard')
         messages.error(request, 'Entered email and/or password incorrect!')
@@ -145,7 +144,7 @@ def profile(request, user_id):
 #     return render(request, 'dashboard/editPersonalinfo.html', context)
 def profile_update(request, user_id):
     user= request.user
-    data = {'email': user.email, 'cover': user.cover , 'date_of_birth': user.date_of_birth}
+    data = {'email': user.email,'date_of_birth': user.date_of_birth}
     if request.method == 'GET':
         user=user
         form  = OHUserUpdateForm(initial=data)
@@ -155,10 +154,11 @@ def profile_update(request, user_id):
         }
         return render(request, 'dashboard/editPersonalinfo.html', context)
     if request.method=="POST":
-        form  = OHUserUpdateForm(request.POST)
+        form  = OHUserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             updated_user = form.cleaned_data.get('email')
+            updated_user = form.cleaned_data.get('date_of_birth')
             updated_user.save()
             messages.success(request, 'The account was succefully updated for ' + updated_user)
             return redirect(f"/profile/{ user_id }")
@@ -169,6 +169,34 @@ def profile_update(request, user_id):
         }
         return render(request, 'dashboard/editPersonalinfo.html', context)
     return render(request, 'dashboard/editPersonalinfo.html', {})
+
+def profileImage_update(request, user_id):
+    user= request.user
+    if request.method == 'GET':
+        user=user
+        form  = OHUserUpdateForm()
+        context = {
+            'form': form,
+            'user': user
+        }
+        return render(request, 'dashboard/profileImage.html', context)
+    if request.method=="POST":
+        form  = OHProfileUpdateForm(request.POST, request.FILES, instance=user.profileImage.cover)
+        if form.is_valid():
+            profileImage= form.save(commit=False)
+            user= profileImage.user 
+            if 'cover' in request.FILES:
+                profileImage.cover = request.FILES['cover']
+            profileImage.save()
+            messages.success(request, 'Profile picture was succefully updated for ' + user)
+            return redirect(f"/profile/{ user_id }")
+        messages.error(request, 'Errors occured while processing your profile_picture update request')
+        form  = OHProfileUpdateForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'dashboard/profileImage.html', context)
+    return render(request, 'dashboard/profileImage.html', {})
 def delete_profile(request, user_id):
     if request.method == 'POST':
         form = UserDeleteForm(request.POST)

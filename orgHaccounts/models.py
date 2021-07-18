@@ -44,12 +44,6 @@ class OrgHUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    cover = models.ImageField(
-        upload_to='profile_images/',
-        verbose_name='profile picture',
-        null=True,
-        blank=True,
-        )
     date_of_birth = models.DateField(
         verbose_name='birth date',
     )
@@ -84,7 +78,17 @@ class OrgHUser(AbstractBaseUser):
     @property
     def is_admin(self):
         "Is the user a admin member?"
-        return self.admin
+        return self.admin 
+class ProfileImage(models.Model):
+    cover = models.ImageField(
+        upload_to='profile_images/',
+        verbose_name='profile picture',
+        null=True,
+        blank=True,
+        )
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at= models.DateTimeField(auto_now=True)
+    updated_at= models.DateTimeField(auto_now_add=True)
 
 class ScreenAnswer(models.Model):
     answer= models.CharField(max_length=25)
@@ -95,6 +99,7 @@ class ScreenAnswer(models.Model):
 class VaccineResponse(models.Model):
     vaccine_type= models.CharField(max_length=25) 
     vaccine_dose= models.CharField(max_length=25) 
+    date_received = models.DateField(verbose_name='Vaccination date',)
     vaccine_location= models.CharField(max_length=25)
     vaccine_illness= models.TextField(max_length=1000)
     user= models.ForeignKey(User, related_name="vaccineResponses", on_delete=models.SET_NULL, null=True)

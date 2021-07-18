@@ -15,7 +15,7 @@ Edit Personal Information
     <div class="row">
         <div class="col">
             <p class="display-4"> Edit Profile </p>
-            <form class="OHUserUpdateForm" enctype="multipart/form-data" method="POST">
+            <form class="OHUserUpdateForm" method="POST">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="row">

@@ -74,6 +74,7 @@ hr{
 .card{
     display:block;
     padding:5px;
+    background-color: rgb(233, 213, 188);
 }
 .row{
     padding: 10px;

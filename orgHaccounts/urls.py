@@ -17,7 +17,7 @@ urlpatterns = [
     # path('edit/<int:user_id>', views.edit_personalInfo),
     path('delete_profile/<int:user_id>', views.delete_profile),
     path('edit/<int:user_id>', views.profile_update),
-    # path('password_change/', views.password_change),
+    path('profile_picture/<int:user_id>', views.profileImage_update),
     path('feed', views.feed),
     path('newsPost', views.newsPost),
     path('add_newsPost', views.add_newsPost),

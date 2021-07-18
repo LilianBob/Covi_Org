@@ -1,3 +1,4 @@
+from orgHaccounts.models import ProfileImage
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
@@ -13,7 +14,7 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'cover','date_of_birth', 'password1', 'password2']
+        fields = ['email','date_of_birth', 'password1', 'password2']
         widgets = {
             'email': forms.TextInput(attrs={'class': 'form-control col-lg-6'}),
             'date_of_birth': forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6',}),
@@ -36,12 +37,17 @@ class RegisterForm(UserCreationForm):
 
 class OHUserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6', 'type':'text',}),)
-    cover = forms.ImageField(label= 'Profile picture', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
     date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6', 'type':'Date','value': '{ user_date_of_birth }'}),)
     
     class Meta:
         model=User
-        fields=['email', 'cover', 'date_of_birth']
+        fields=['email', 'date_of_birth']
+
+class OHProfileUpdateForm(forms.ModelForm):
+    cover = forms.ImageField(label= 'Profile picture', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
+    class Meta:
+        model=ProfileImage
+        fields=['cover']
 
 class UserDeleteForm(forms.ModelForm):
     class Meta:
