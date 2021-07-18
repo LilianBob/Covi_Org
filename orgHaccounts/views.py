@@ -223,7 +223,7 @@ def add_like(request, newsPost_id):
         return redirect("/feed")
     if 'user_id' not in request.session:
         messages.success(request, "Signup or login to interact with Updates!")
-        return redirect("/to_login")
+        return redirect("/login")
 
 def add_comment(request, newsPost_id):
     newsPost_comment= request.POST['newsPost_comment']

@@ -42,5 +42,13 @@ urlpatterns = [
         'reset/done/',
         auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete'
-    )
+    ),
+    path('password_change/',
+        auth_views.PasswordChangeView.as_view(success_url=reverse_lazy('password_change_done')), 
+        name='password_change'
+        ),
+    path('password_change/done/', 
+        auth_views.PasswordChangeDoneView.as_view(), 
+        name='password_change_done'
+        ),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
