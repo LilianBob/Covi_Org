@@ -18,7 +18,7 @@
                 {% for comment in newsPost.comments.all %}
                     <ul>
                         <li class="card-text" >
-                            {{ comment.user.first_name }} {{ comment.user.last_name }} commented: <br>
+                            {{ comment.user.email }} commented: <br>
                             {{comment.newsPost_comment}}
                         </li>
                     </ul>

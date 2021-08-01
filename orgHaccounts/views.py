@@ -2,16 +2,16 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 import requests
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
-from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, OHProfileUpdateForm
+from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm
 from django.contrib import messages
-from .models import FileUpload, ProfileImage, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
+from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
 
 User= get_user_model()
 
 def index(request):
     context={
         'health_condition': 'Covid-19',
-        'required_action': 'self screen and report your vaccine status'
+        'required_action': 'self screen and report vaccination status'
     }
     return render(request, 'home.html', context)
 def register(request):
@@ -98,50 +98,45 @@ def vreported(request):
         vaccine_dose= request.POST['vaccine_dose']
         vaccine_location= request.POST['vaccine_location']
         vaccine_illness= request.POST['vaccine_illness']
+        date_received= request.POST['date_received']
         user= request.user
-        vaccineResponse= VaccineResponse.objects.create(vaccine_type=vaccine_type, vaccine_dose=vaccine_dose, vaccine_location=vaccine_location, vaccine_illness=vaccine_illness, user=user)
+        vaccineResponse= VaccineResponse.objects.create(vaccine_type=vaccine_type, vaccine_dose=vaccine_dose, date_received=date_received, vaccine_location=vaccine_location, vaccine_illness=vaccine_illness, user=user)
         request.session['vaccineResponse_id'] = vaccineResponse.id
         messages.success(request, "You have successfully submitted your report!")
         return redirect("/dashboard")
-        
-def files(request, user_id):
-    user= request.user
-    all_fileUploads= FileUpload.objects.filter(id=user_id)
-    context= {
-        "user":user,
-        "all_fileUploads":all_fileUploads,
-    }
-    return render (request, 'dashboard/files.html', context)
 def file_upload(request, user_id):
-    if request.method=="POST":
-        if request.FILES == None:
-            messages.info (request, "No docs uploaded!")
+    if request.method == 'GET':
         user= request.user
-        new_file= FileUpload(file=request.FILES['doc'], user=user)
-        request.session['file_id'] = new_file.id
-        new_file.save()
+        form  = FileUploadForm()
+        context = {
+            'form': form,
+            'user': user,
+            }
+        return render (request, 'dashboard/files.html', context)
+    if request.method=="POST":
+        user=request.user
+        form  = FileUploadForm(request.POST, request.FILES)
+        context= {
+            "form":form
+        }
+        if form.is_valid():
+            file= FileUpload(file=request.FILES['file'], user=user)
+            file.save()
         messages.success(request, "File successfully uploaded!")
-        return redirect(f"/files/{ user_id}")
-    return redirect(f"/files/{ user_id}")
+        return redirect(f"/file_upload/{ user_id}")
+    messages.error(request, 'Errors occured while processing your request')
+    form  = FileUploadForm()
+    context = {'form': form}
+    return render (request, 'dashboard/files.html', context)
 
 def profile(request, user_id):
     user= request.user
-    all_vaccineResponses= VaccineResponse.objects.filter(id=user_id)
-    all_screenAnswers= ScreenAnswer.objects.filter(id=user_id)
     context={
         "history": "Personal Information",
         "health_condition": "Covid-19",
         "user": user,
-        "all_vaccineResponses": all_vaccineResponses,
-        "all_screenAnswers": all_screenAnswers,
     }
     return render(request, 'dashboard/profile.html', context)
-# def edit_personalInfo(request, user_id):
-#     user=request.user
-#     context={
-#         "user":user
-#     }
-#     return render(request, 'dashboard/editPersonalinfo.html', context)
 def profile_update(request, user_id):
     user= request.user
     data = {'email': user.email,'date_of_birth': user.date_of_birth}
@@ -160,7 +155,7 @@ def profile_update(request, user_id):
             updated_user = form.cleaned_data.get('email')
             updated_user = form.cleaned_data.get('date_of_birth')
             updated_user.save()
-            messages.success(request, 'The account was succefully updated for ' + updated_user)
+            messages.success(request, 'The account was successfully updated for ' + updated_user)
             return redirect(f"/profile/{ user_id }")
         messages.error(request, 'Errors occured while processing your profile-update request')
         form  = OHUserUpdateForm(initial=data)
@@ -170,33 +165,6 @@ def profile_update(request, user_id):
         return render(request, 'dashboard/editPersonalinfo.html', context)
     return render(request, 'dashboard/editPersonalinfo.html', {})
 
-def profileImage_update(request, user_id):
-    user= request.user
-    if request.method == 'GET':
-        user=user
-        form  = OHUserUpdateForm()
-        context = {
-            'form': form,
-            'user': user
-        }
-        return render(request, 'dashboard/profileImage.html', context)
-    if request.method=="POST":
-        form  = OHProfileUpdateForm(request.POST, request.FILES, instance=user.profileImage.cover)
-        if form.is_valid():
-            profileImage= form.save(commit=False)
-            user= profileImage.user 
-            if 'cover' in request.FILES:
-                profileImage.cover = request.FILES['cover']
-            profileImage.save()
-            messages.success(request, 'Profile picture was succefully updated for ' + user)
-            return redirect(f"/profile/{ user_id }")
-        messages.error(request, 'Errors occured while processing your profile_picture update request')
-        form  = OHProfileUpdateForm()
-        context = {
-            'form': form,
-        }
-        return render(request, 'dashboard/profileImage.html', context)
-    return render(request, 'dashboard/profileImage.html', {})
 def delete_profile(request, user_id):
     if request.method == 'POST':
         form = UserDeleteForm(request.POST)
@@ -210,7 +178,6 @@ def delete_profile(request, user_id):
             'form': form
         }
         return render(request, 'dashboard/delete_profile.html', context)
-    return redirect('/')
 def feed(request):
     all_newsPosts= NewsPost.objects.all()
     context={
@@ -219,8 +186,8 @@ def feed(request):
     return render(request, 'feed/feedPost.html', context)
 def newsPost(request):
     if request.user.is_staff and not None:
-        return redirect("/admin")
-    return redirect("/admin")
+        return redirect("/admin/orgHaccounts/newspost/")
+    return redirect("/admin/orgHaccounts/newspost/")
 def add_newsPost(request):
     if request.session == "POST":
         creator= User.objects.get(id=request.session['user_id'])
@@ -239,33 +206,36 @@ def add_newsPost(request):
 def add_like(request, newsPost_id):
     if request.method == "POST":
         liked_newsPost = NewsPost.objects.get(id=newsPost_id)
-        user_liking = User.objects.get(id=request.session['user_id'])
+        user=request.user
+        if user.is_authenticated:
+            user_liking = user
 
-        newLike = Like(user=user_liking, newsPost=liked_newsPost)
-        newLike.alreadyLiked = True
+            newLike = Like(user=user_liking, newsPost=liked_newsPost)
+            newLike.alreadyLiked = True
 
-        liked_newsPost.user_likes.add(user_liking)
-        liked_newsPost.likes += 1
-        liked_newsPost.save()
-        newLike.save()
-        return redirect("/feed")
-    if 'user_id' not in request.session:
-        messages.success(request, "Signup or login to interact with Updates!")
-        return redirect("/login")
+            liked_newsPost.user_likes.add(user_liking)
+            liked_newsPost.likes += 1
+            liked_newsPost.save()
+            newLike.save()
+            return redirect("/feed")
+        else:
+            messages.success(request, "Signup or login to interact with Updates!")
+            return redirect("/login")
+    return redirect("/feed")
 
 def add_comment(request, newsPost_id):
     newsPost_comment= request.POST['newsPost_comment']
-    user = User.objects.get(id=request.session['user_id'])
+    user = request.user
     newsPost = NewsPost.objects.get(id=newsPost_id)
     Comment.objects.create(newsPost_comment=newsPost_comment, user=user, newsPost=newsPost)
     return redirect(f'/comments/{ newsPost_id }')
 
 def comments(request, newsPost_id):
     newsPost = NewsPost.objects.get(id=newsPost_id)
-    # all_comments= Comment.objects.filter(id=newsPost_id)
+    all_comments= Comment.objects.filter(id=newsPost_id)
     context={
         "newsPost": newsPost,
-        # "all_comments": all_comments,
+        "all_comments": all_comments,
     }
     return render (request, 'feed/comments.html', context)
 def delete_post(request, newsPost_id):

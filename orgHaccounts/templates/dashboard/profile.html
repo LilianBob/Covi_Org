@@ -6,6 +6,11 @@
 {% block content%} 
 <div class="container" id="wrapper">
     <div class="row">
+        <div class="col">
+            {% include "partials/errors.html" %}     
+        </div>
+    </div>
+    <div class="row">
         <div class="col align-self-center">
             <div class="card" style="width:100%;">
                 <div class="card-body">
@@ -16,7 +21,7 @@
                     <p class="card-text"> <span> Account created on: {{ user.created_at }} </span></p>
                     <p class="card-text"> <span> Last log in: {{ user.last_login }} </span></p>
                     <p class="card-text">
-                        <a href="/files/{{ user.id }}" class="btn btn-primary"> Upload and view files </a> 
+                        <a href="/file_upload/{{ user.id }}" class="btn btn-primary"> Upload and view files </a> 
                         <a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }} </a>
                     </p> 
                     <p>
@@ -29,53 +34,52 @@
         </div>
         <div class="col align-self-center">
             <div class="card" style="width: 100%;">
-                {% if user.profileImage %}
-                    {% load static %}
-                    <img class="card-img-top"  src="{{ profileImage.cover.url }}" style="width: 100%; float:right;" alt="profile picture">
-                        <span>{{ profileImage.cover }}</span>
-                {% endif %}
-                {% if user.profileImage not in request.session %}
-                    {% load static %}
-                    <img class="card-img-top" src="{% static 'kitty.jpg' %}" alt="profile picture">
-                {% endif %}
+            {% load static %}
+                <img class="card-img-top" src="{% static 'covi_virus.jpg' %}" alt="">
                 <div class="card-body">
-                    <a class="card-text" href="/profile_picture/{{ user.id }}"> Update profile picture </p>
+                    <p class="card-text"> <small> ... contributing to public health... </small></p>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col align-self-center">
-            {% if user.screenAnswers %} 
             <div class="card scrollable" style="width:100%;">
+            {% if user.screenAnswers %} 
                 <div class="card-body">
                     <p class="card-title"> Covid-19 Screen Responses: </p>
-                    <ul>
-                    {% for screenAnswer in all_screenAnswers %}
-                        <li><span> Replied " {{ screenAnswer.answer }} " on {{ screenAnswer.created_at }}</span></li>
-                    {% endfor %}
-                    </ul>
+                    <div class="scrollable">
+                        <ul>
+                            {% for screenAnswer in user.screenAnswers.all %}
+                                <li><span> Replied " {{ screenAnswer.answer }} " on {{ screenAnswer.created_at }}</span></li>
+                            {% endfor %}
+                            </ul>
+                    </div>
                 </div>
-            </div>
-            {% else %} <p class="card-title"> You have not screened for Covid-19 yet! </p>
+            {% else %} 
+                <p class="card-text"> You have not screened for Covid-19 yet! </p>
             {%  endif %}
+            </div>
         </div>
         <div class="col align-self-center">
-            {% if user.vaccineResponses %}
             <div class="card scrollable" style="width:100%;">
+                {% if user.vaccineResponses %}
                 <div class="card-body">
                     <p class="card-title"> Vaccine Report: </p>
-                    <p class="card-text"><b> {{ vaccineResponse.created_at }} </b></p>
-                    <ul>
-                    {% for vaccineResponse in all_vaccineResponses %}
-                        <li><span>{{ vaccineResponse.vaccine_type }}, {{ vaccineResponse.vaccine_dose}} dose adminstered @{{ vaccineResponse.vaccine_location }}</span></li>
-                        <li><span> Experienced {{ vaccineResponse.vaccine_illness }} following vaccine receipt</span></li>
-                    {% endfor %}
-                    </ul>
+                    <div class="scrollable">
+                        <ul>
+                            {% for vaccineResponse in user.vaccineResponses.all %}
+                                <li><p class="card-text"><b> {{ vaccineResponse.created_at }} </b></p></li>
+                                <li><span>{{ vaccineResponse.vaccine_type }}, {{ vaccineResponse.vaccine_dose}} dose adminstered @ {{ vaccineResponse.vaccine_location }}, on {{vaccineResponse.date_received }}</span></li>
+                                <li><span> Experienced {{ vaccineResponse.vaccine_illness }} following vaccine receipt</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
+                {% else %}
+                    <p class="card-text"> Nothing reported yet! </p>
+                {% endif %}
             </div>
-            {% else %} No reports to show!
-            {% endif %}
         </div> 
     </div>
 </div>

@@ -9,12 +9,12 @@ Vaccine Reporting
         <div class="col">
             <div class="card" style="width: 50rem;">
                 <div class="card-body">
-                    <p class="card-title"><h2> Report Covid_19 vaccination </h2></p>                     
+                    <p class="card-title"><h2> Report Covid-19 vaccination </h2></p>                     
                     <form action="/vreported" method="POST" class="form">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="vaccine_type"> Vaccine type received: </label>
-                            <select name="vaccine_type" type="select" class="md-select" id="choicefields">
+                            <select name="vaccine_type" type="select" class="md-select form-control" id="choicefields">
                                 <option value="{{ pfizer }}"> {{ pfizer }} </option>
                                 <option value="{{ moderna }}"> {{ moderna }} </option>
                                 <option value="{{ janssen }}"> {{ janssen }} </option>
@@ -23,7 +23,7 @@ Vaccine Reporting
                         </div>
                         <div class="form-group">
                             <label for="vaccine_dose"> Dose received: </label>
-                            <select name="vaccine_dose" type="select" class="md-select" id="choicefields">
+                            <select name="vaccine_dose" type="select" class="md-select form-control" id="choicefields">
                                 <option value="{{ 1st }}"> {{ 1st }} </option>
                                 <option value="{{ 2nd }}"> {{ 2nd }} </option>
                                 <option value="{{ 3rd }}"> {{ 3rd }} </option>
@@ -31,11 +31,15 @@ Vaccine Reporting
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="vaccine_location" class=> Choose a vaccine provider(WA):</label>
-                            <select name="vaccine_location" type="select" class="mdb-select" id="choicefields" searchable="Search here..">
+                            <label for="date_received"> Vaccination date: </label>
+                            <input type="date" name="date_received" id="date_received" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="vaccine_location"> Vaccination site: </label>
+                            <select name="vaccine_location" type="select" class="md-select form-control" id="choicefields" searchable="Search here..">
                             {% for i in location %}
-                                <option value="{{ i.properties.provider }}"> {{ i.properties.name }} , {{ i.properties.provider }}</option>
-                            {% endfor%}
+                                <option value="{{ i.properties.provider }}"> {{ i.properties.provider }}, {{ i.properties.city }} | {{ i.properties.address}}</option>
+                            {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">

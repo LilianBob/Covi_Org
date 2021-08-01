@@ -12,7 +12,7 @@ Covid-19  News: {{ newsPost.title }}
                 <div class="card-body">
                     <p class="card-text">  {{ newsPost.postContent }}</p> <br>
                     <div class="card" style="width: 25%">
-                    {% if 'user_id' in request.session %}
+                    {% if user.is_authenticated %}
                         <form action="/comment/{{ newsPost.id }}" method="post" name="comment" id="commentform">
                             {% csrf_token %}
                             <div class="form-group">

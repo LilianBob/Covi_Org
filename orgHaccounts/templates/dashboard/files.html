@@ -3,6 +3,8 @@
 Upload files to Dashbord
 {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content%} 
 <div class="container" id="wrapper">
     <div class="row">
@@ -13,16 +15,9 @@ Upload files to Dashbord
     <div class="row">
         <div class="col">
             <p class="display-4"> Files </p>
-            <form action="/file_upload/{{ user.id }}" enctype="multipart/form-data" method="POST">
-                {% csrf_token %} 
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="doc"class= "col-lg-4"> Upload file: </label>
-                            <input type="file" name="doc" id="doc" class="form-control col-lg-6">
-                        </div>
-                    </div>
-                </div>
+            <form class="FileUploadForm" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
@@ -35,19 +30,25 @@ Upload files to Dashbord
     </div>
     <div class="row">
         <div class="col">
-        {% if user.fileUploads %}
             <div class="card" style="width: 50%;">
                 <div class="card-body">
-                {% for fileUpload in all_fileUploads %}
+                {% if user.fileUploads %}
                     <p class="card-title"> Uploaded files </p>
-                    <a href="{{ fileUpload.file.url }}" target="_blank">
-                        <span>{{ fileUpload.file }}</span>
-                    </a>
-                {% endfor %}
+                    <div class="scrollable">
+                        <ul>
+                            {% for fileUpload in user.fileUploads.all %}
+                                <li>
+                                    <a href="{{ fileUpload.file.url }}" target="_blank">
+                                        <span>{{ fileUpload.file }}</span>
+                                    </a>
+                                </li>
+                                {% endfor %}    
+                        </ul>
+                    </div>
+                {% endif %}
                 </div>
             </div>
-        {% else %} <p> No files to show!</p>
-        {% endif %}
+        
         </div>
     </div>
     <div class="row">

@@ -1,13 +1,12 @@
-from orgHaccounts.models import ProfileImage
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from .models import FileUpload
 
 User = get_user_model()
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6'}),)
-    cover = forms.ImageField(label= 'Profile picture', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6'}),)
     date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6',}),)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class': 'form-control col-lg-6'}))
@@ -43,11 +42,12 @@ class OHUserUpdateForm(forms.ModelForm):
         model=User
         fields=['email', 'date_of_birth']
 
-class OHProfileUpdateForm(forms.ModelForm):
-    cover = forms.ImageField(label= 'Profile picture', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
+class FileUploadForm(forms.ModelForm):
+    file = forms.FileField(label= 'File', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
+    
     class Meta:
-        model=ProfileImage
-        fields=['cover']
+        model= FileUpload
+        fields=['file']
 
 class UserDeleteForm(forms.ModelForm):
     class Meta:

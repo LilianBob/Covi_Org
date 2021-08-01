@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, ProfileImage, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
+from .models import User, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
 
@@ -32,21 +32,18 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
-@admin.register(ProfileImage)
-class ProfileImage(admin.ModelAdmin):
-    list_display=("cover", "user")
 @admin.register(FileUpload)
 class FileUpload(admin.ModelAdmin):
     list_display=("file", "user")
 @admin.register(VaccineResponse)
 class VaccineResponseAdmin(admin.ModelAdmin):
-    list_display=("vaccine_type", "vaccine_dose", "vaccine_location", "vaccine_illness", "user")
+    list_display=("vaccine_type", "vaccine_dose", "date_received", "vaccine_location", "vaccine_illness", "user")
 @admin.register(ScreenAnswer)
 class ScreenAnswerAdmin(admin.ModelAdmin):
     list_display=("answer", "user")
 @admin.register(NewsPost)
 class NewsPostAdmin(admin.ModelAdmin):
-    list_display=("intro", "title", "description", "postContent", "creator")
+    list_display=("intro", "title", "newscover", "description", "postContent", "creator")
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):
     list_display=("newsPost", "alreadyLiked", "user")

@@ -79,16 +79,6 @@ class OrgHUser(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin 
-class ProfileImage(models.Model):
-    cover = models.ImageField(
-        upload_to='profile_images/',
-        verbose_name='profile picture',
-        null=True,
-        blank=True,
-        )
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
-    created_at= models.DateTimeField(auto_now=True)
-    updated_at= models.DateTimeField(auto_now_add=True)
 
 class ScreenAnswer(models.Model):
     answer= models.CharField(max_length=25)
@@ -107,7 +97,7 @@ class VaccineResponse(models.Model):
     updated_at= models.DateTimeField(auto_now=True, null=True)
 
 class FileUpload(models.Model):
-    file= models.FileField(upload_to="user_docs")
+    file= models.FileField(upload_to="user_docs", null=True, blank=True)
     user= models.ForeignKey(User, related_name="fileUploads", on_delete=models.CASCADE)
     created_at= models.DateTimeField(auto_now=True)
     updated_at= models.DateTimeField(auto_now_add=True)
@@ -123,16 +113,15 @@ class NewsPostManager(models.Manager):
 
 class NewsPost(models.Model):
     intro = models.CharField(max_length=255)
-    newscover = models.ImageField(upload_to='news_images/')
+    newscover = models.ImageField(upload_to='news_images/', default='news_images/get_social.jpg')
     title = models.CharField(max_length=255)
     description= models.TextField()
     likes = models.PositiveIntegerField(default=0)
     user_likes = models.ManyToManyField(User, related_name='liked_newsposts')
     postContent= models.TextField()
-    creator = models.ForeignKey(User, related_name='user_newsposts', on_delete=models.PROTECT)
+    creator = models.ForeignKey(User, related_name='newsPosts', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    objects = NewsPostManager()
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="users", null=True)
