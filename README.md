@@ -9,12 +9,12 @@
 # Technologies and Tools
 
 ```
-*Python 3.6
-*Django 3.2
-*Bootstrap4
-*HTML5
-*CSS
-*Vaccinespotter API
+        Python 3.6
+        Django 3.2
+        Bootstrap4
+        HTML5
+        CSS
+        Vaccinespotter API
 ```
 
 # Getting Started
