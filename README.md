@@ -18,9 +18,9 @@
 
 # Getting Started
 
-### Python 3.6 and django 3.2 are used to create the app, but django 2.2+ and python 3.6+ should work as well.
-### Create a virtual environment for your project, activate the environment, and clone project
-### Navigate to the project folder, install dependencies, apply migrations, and run the development server:
+##### Python 3.6 and django 3.2 are used to create the app, but django 2.2+ and python 3.6+ should work as well.
+##### Create a virtual environment for your project, activate the environment, and clone project
+##### Navigate to the project folder, install dependencies, apply migrations, and run the development server:
 ```
 - `git clone https://github.com/LilianBob/orgH.git`
 - `cd orgH`
