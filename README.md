@@ -47,6 +47,7 @@ Features
 * User can make multiple selections of Covid-19 and related symptoms in the screening tool
 * Application can be used by organizations beyond the Washington State
 * User can report on Covid-19 medical tests and the tests' outcomes
+* Application can be adapted to other infectious diseases
 
 # Contributing
 
