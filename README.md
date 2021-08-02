@@ -9,12 +9,12 @@
 # Technologies and Tools
 
 ```
-* Python 3.6
-* Django 3.2
-* Bootstrap4
-* HTML5
-* CSS
-* Vaccinespotter API
+*Python 3.6
+*Django 3.2
+*Bootstrap4
+*HTML5
+*CSS
+*Vaccinespotter API
 ```
 
 # Getting Started
@@ -23,11 +23,11 @@
 ##### Create a virtual environment for your project, activate the environment, and clone project
 ##### Navigate to the project folder, install dependencies, apply migrations, and run the development server:
 ```
-`git clone https://github.com/LilianBob/orgH.git`
-`cd orgH`
-`$ pip install -r requirements.txt`
-`$ python manage.py migrate`
-`$ python manage.py runserver`
+    $ git clone https://github.com/LilianBob/orgH.git
+    $ cd orgH
+    $ pip install -r requirements.txt
+    $ python manage.py migrate
+    $ python manage.py runserver 
 ```
 
 Features
