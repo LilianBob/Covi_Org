@@ -31,7 +31,7 @@
     $ python manage.py runserver 
 ```
 
-Features
+# Features
 
 * User can register, login, and view Covid-19 news updates
 * User can screen for Covid-19 infection
