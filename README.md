@@ -1,8 +1,8 @@
 # orgH
 
-| Info | The OrgHealth app is for use by organizations to track the Covid-19 status of staff |
-
-| Author | Lilian Robert (https://github.com/LilianBob) |
+|-----  | -----
+| Info  | The OrgHealth app is for use by organizations to track the Covid-19 status of staff |
+| Author        | Lilian Robert (https://github.com/LilianBob) |
 
 # Demo 
 
