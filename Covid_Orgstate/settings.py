@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'orgH.urls'
+ROOT_URLCONF = 'Covid_Orgstate.urls'
 
 TEMPLATES = [
     {
@@ -75,8 +75,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'orgH.wsgi.application'
-
+WSGI_APPLICATION = 'Covid_Orgstate.wsgi.application'
+# ASGI_APPLICATION = 'Covid_Orgstate.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

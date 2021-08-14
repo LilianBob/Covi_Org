@@ -1,6 +1,6 @@
-# orgH
+# Covid_Orgstate
 
-##### Info: The OrgHealth app is for use by organizations to track the Covid-19 status of staff
+##### Info: The Covid_Orgstate (OrgHealth) app is for in-house tracking of the Covid-19 status of staff
 ##### Author: Lilian Robert (https://github.com/LilianBob)
 
 # Demo 
@@ -24,8 +24,8 @@
 ##### Create a virtual environment for your project, activate the environment, and clone project
 ##### Navigate to the project folder, install dependencies, apply migrations, and run the development server:
 ```
-    $ git clone https://github.com/LilianBob/orgH.git
-    $ cd orgH
+    $ git clone https://github.com/LilianBob/Covid_Orgstate.git
+    $ cd Covid_Orgstate
     $ pip install -r requirements.txt
     $ python manage.py migrate
     $ python manage.py runserver 
