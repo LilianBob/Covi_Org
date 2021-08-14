@@ -1,5 +1,5 @@
 """
-WSGI config for orgH project.
+WSGI config for Covid_Orgstate project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
