@@ -153,8 +153,7 @@ def profile_update(request, user_id):
         if form.is_valid():
             form.save()
             updated_user = form.cleaned_data.get('email')
-            updated_user = form.cleaned_data.get('date_of_birth')
-            updated_user.save()
+            user = updated_user
             messages.success(request, 'The account was successfully updated for ' + updated_user)
             return redirect(f"/profile/{ user_id }")
         messages.error(request, 'Errors occured while processing your profile-update request')

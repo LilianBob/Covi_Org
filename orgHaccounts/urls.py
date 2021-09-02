@@ -11,7 +11,6 @@ urlpatterns = [
     path('screened', views.screened),
     path('vaccine_reporting', views.vaccine_reporting),
     path('vreported', views.vreported),
-    # path('files/<int:user_id>', views.files),
     path('file_upload/<int:user_id>', views.file_upload),
     path('profile/<int:user_id>', views.profile),
     path('delete_profile/<int:user_id>', views.delete_profile),
