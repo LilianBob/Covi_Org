@@ -30,30 +30,29 @@ Upload files to Dashbord
     </div>
     <div class="row">
         <div class="col">
-            <div class="card" style="width: 50%;">
+            <div class="card" style="width:50%;">
                 <div class="card-body">
                 {% if user.fileUploads %}
                     <p class="card-title"> Uploaded files </p>
-                    <div class="scrollable">
                         <ul>
+                            <div class="scrollable">
                             {% for fileUpload in user.fileUploads.all %}
                                 <li>
                                     <a href="{{ fileUpload.file.url }}" target="_blank">
                                         <span>{{ fileUpload.file }}</span>
                                     </a>
                                 </li>
-                                {% endfor %}    
-                        </ul>
-                    </div>
+                                {% endfor %} 
+                            </div>   
+                        </ul>                        
                 {% endif %}
                 </div>
             </div>
-        
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <div class="card" style="width: 50%;">
+            <div class="card" style="width:50%;">
                 <div class="card-body">
                     <p class="card-text"> Have questions about Covid-19? </p>                     
                     <a href="/feed" class="btn btn-primary"> Get updates </a>
