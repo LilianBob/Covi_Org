@@ -11,21 +11,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col scrollable">
-            <div class="card" style="width:50%;">
-                <div class="card-body">
-                    <p class="card-title"> Comments</p>
-                {% for comment in newsPost.comments.all %}
-                    <ul>
-                        <li class="card-text" >
-                            {{ comment.user.email }} commented: <br>
-                            {{comment.newsPost_comment}}
-                        </li>
-                    </ul>
-                {% endfor %}
-                    <p class="card-text"><span><a href="/feed"> Return to News Post </a></span></p>
+        <div class="col">
+            <div class="card" style="width:100%;">
+                <div class="scrollable">
+                    <div class="card-body">
+                        <p class="card-title"> Comments</p>
+                    {% for comment in newsPost.comments.all %}
+                        <ul>
+                            <li class="card-text" >
+                                {{ comment.user.email }} commented: <br>
+                                {{comment.newsPost_comment}}
+                            </li>
+                        </ul>
+                    {% endfor %}
+                        <p class="card-text"><span><a href="/feed"> Return to News Post </a></span></p>
+                    </div>
                 </div>
-            </div>
+            </div>    
         </div>
     </div>
 </div>
