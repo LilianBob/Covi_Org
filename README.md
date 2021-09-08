@@ -1,6 +1,6 @@
 # Covid_Orgstate
 
-##### Info: The Covid_Orgstate (OrgHealth) app is for in-house tracking of the Covid-19 status of staff
+##### Info: The OrgHealth app is for in-house tracking of Covid-19 status among staff
 ##### Author: Lilian Robert (https://github.com/LilianBob)
 
 # Demo 
