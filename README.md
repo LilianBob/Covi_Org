@@ -7,8 +7,8 @@
 
 ![OrgHealth demo - 8_1_2021, 9_13_37 AM (3)](https://user-images.githubusercontent.com/78000300/127915737-3ef1280d-0921-4bdf-ac7d-0eccceb2260f.gif)
 
-[![OrgHealth](https://img.vimeo.com/vi/4db746e6be/0.jpg)](http://www.vimeo.com/watch?v=4db746e6be)
-[![Alternate Text]({https://img.vimeo.com/vi/4db746e6be/0.jpg})]({https://vimeo.com/599862936/4db746e6be} "OrgHealth Vi")
+[![OrgHealth](https://img.vimeo.com/vi/4db746e6be/0.jpg)](https://vimeo.com/599862936/4db746e6be)
+
 
 
 # Technologies and Tools
