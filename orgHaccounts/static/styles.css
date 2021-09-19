@@ -1,8 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 .jumbotron-fluid{ 
     position: relative; 
-    width: 80%;
+    width: 100%;
     display: block;
-    margin:auto;
     align-items: center;
 }
     
@@ -32,11 +35,17 @@ h1 a, h2 a{
     font-family: Arial, Helvetica, sans-serif;
 }
 .jumbotron-fluid .container .row{
-    padding:40px;
+    padding: 40px;
+}
+#signIn{
+    display: flex;
+    justify-content:center;
+    width: 100%;
 }
 .navbar-nav{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 0;
 }
 .navbar-nav .nav-item a{
     font-family: cursive;
@@ -44,7 +53,11 @@ h1 a, h2 a{
     font-size: 20px;
     text-decoration: none;
 }
-
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
 .container{
     display: block;
     margin:auto;

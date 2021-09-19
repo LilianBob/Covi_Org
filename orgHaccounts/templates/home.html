@@ -3,27 +3,73 @@
 Home
 {% endblock %}
 
-{% block content%} 
+{% load crispy_forms_tags %}
 
-<div class="jumbotron-fluid">
-    <div class="container" id="wrapper">
-        <div class="row">
-            <div class="col">
-                <p class="display-4"><b> OrgHealth </b></p>
-        <hr>
+{% block content%} 
+<div class="wrapper">
+    <div class="jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="display-4"><b> OrgHealth </b></p>
+            <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h1> {{ health_condition }}</h1>
+                    <h2><a href="/login"> {{ required_action }} &#8594;</a></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="lead"><a href="/login" class="btn btn-primary"> Get Started! </a></p>
+                    <p class="lead"><a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }}</a></p>
+                </div>   
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <h1> {{ health_condition }}</h1>
-                <h2><a href="/login"> {{ required_action }} &#8594;</a></h2>
+    </div>
+    <div class="row" id="signIn">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {% include "partials/errors.html" %}     
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p class="lead"><a href="/login" class="btn btn-primary"> Get Started! </a></p>
-                <p class="lead"><a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }}</a></p>
-            </div>   
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="form-area login-form">
+                        <div class="form-input">
+                            <p class="display-4"> Login </p>
+                            <form class="AuthenticationForm" method="POST">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit"> Log in </button>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </form>
+                        </div> 
+                        <br>
+                        <div class="form-content">
+                            <p><small> Forgot password? </small></p>
+                            <p><span>
+                                <a href="/password_reset" class="btn btn-primary"> Reset password </a>
+                            </span><p> 
+                        </div>
+                        <div class="form-content">
+                            <p><small>Not yet registered?</small></p>
+                            <p><span>
+                                <a href="/register" class="btn btn-primary"> Signup</a>
+                                <a href="/feed" class="btn btn-primary"> Covid-19 Updates</a>
+                            </span><p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
