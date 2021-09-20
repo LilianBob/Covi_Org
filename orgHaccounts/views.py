@@ -9,9 +9,11 @@ from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, C
 User= get_user_model()
 
 def index(request):
+    form = AuthenticationForm
     context={
         'health_condition': 'Covid-19',
-        'required_action': 'self screen and report vaccination status'
+        'required_action': 'self screen and report vaccination status',
+        'form': form
     }
     return render(request, 'home.html', context)
 def register(request):
