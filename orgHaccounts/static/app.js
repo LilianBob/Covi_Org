@@ -1,18 +1,18 @@
 function myHome() {
     var winH = $(window).height();
-    var wrapperH = $('.wrapper').height();
+    var wrapperH = $('.container-fluid').height();
     if(winH > wrapperH) {                            
-        $('.wrapper').css({
+        $('.container-fluid').css({
             height: (winH) +'px'
         });
     }                                                                               
     $(window).resize(function(){
         var winH = $(window).height();
-        var wrapperH = $('.wrapper').height();
+        var wrapperH = $('.container-fluid').height();
         var diffH = wrapperH - winH;
         var newH = wrapperH - diffH;
         if(wrapperH > winH) {
-            $('.wrapper').css({
+            $('.container-fluid').css({
                 height: (newH) +'px'
             });
         }
