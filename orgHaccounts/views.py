@@ -15,7 +15,20 @@ def index(request):
         'required_action': 'self screen and report vaccination status',
         'form': form
     }
-    return render(request, 'home.html', context)
+    if request.method == 'GET':
+        return render(request, 'home.html', context)
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = OHauthenticate(email=email, password=password)
+            if user is not None and user.is_active:
+                OHlogin(request, user)
+                return redirect('/dashboard')
+        messages.error(request, 'Entered email and/or password incorrect!')
+        context = {'form': form}
+        return render(request, 'signin.html', context)
 def register(request):
     if request.method == 'GET':
         form  = RegisterForm()
