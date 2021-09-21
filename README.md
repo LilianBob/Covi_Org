@@ -4,15 +4,12 @@
 ##### Author: Lilian Robert (https://github.com/LilianBob)
 
 # Demo 
+<!-- ![OrgHealth_F-high](https://user-images.githubusercontent.com/78000300/134134383-3edbfb8c-8320-497c-8066-0a1b5793f778.gif) -->
 
-++++
+![OrgHealth demo - 8_1_2021, 9_13_37 AM (3)](https://user-images.githubusercontent.com/78000300/127915737-3ef1280d-0921-4bdf-ac7d-0eccceb2260f.gif)
 <p align="center">
   <img src="https://user-images.githubusercontent.com/78000300/127915737-3ef1280d-0921-4bdf-ac7d-0eccceb2260f.gif">
 </p>
-++++
-![OrgHealth_F-high](https://user-images.githubusercontent.com/78000300/134134383-3edbfb8c-8320-497c-8066-0a1b5793f778.gif)
-
-![OrgHealth demo - 8_1_2021, 9_13_37 AM (3)](https://user-images.githubusercontent.com/78000300/127915737-3ef1280d-0921-4bdf-ac7d-0eccceb2260f.gif)
 
 # Technologies and Tools
 
