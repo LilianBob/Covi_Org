@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 import requests
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
-from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm
+from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm, UserProfileForm
 from django.contrib import messages
-from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
+from .models import FileUpload, User, ScreenAnswer, UserAvatar, VaccineResponse, NewsPost, Comment, Like 
 
 User= get_user_model()
 
@@ -146,28 +146,47 @@ def file_upload(request, user_id):
 
 def profile(request, user_id):
     user= request.user
-    context={
-        "history": "Personal Information",
-        "health_condition": "Covid-19",
-        "user": user,
-    }
-    return render(request, 'dashboard/profile.html', context)
+    form= UserProfileForm()
+    if request.method == "GET":
+        context={
+            "history": "Personal Information",
+            "health_condition": "Covid-19",
+            "user": user,
+            "form": form
+        }
+        return render(request, 'dashboard/profile.html', context)
+    if request.method=="POST":
+        form= UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            updated_avatar = form.clean_avatar.get('avatar')
+            user.avatar= updated_avatar
+            messages.success(request, 'The picture was successfully updated for ' + user)
+            return redirect(f"/profile/{ user_id }")
+    messages.error(request, 'Errors occured while processing your request')
+    form  = UserProfileForm()
+    context = {'form': form}
+    return render (request, 'dashboard/profile.html', context)
 def profile_update(request, user_id):
     user= request.user
     data = {'email': user.email,'date_of_birth': user.date_of_birth}
     if request.method == 'GET':
         user=user
-        form  = OHUserUpdateForm(initial=data)
+        formA= OHUserUpdateForm(initial=data)
+        formB= UserProfileForm()
         context = {
-            'form': form,
+            'formA': formA,
+            'formB': formB,
             'user': user
         }
         return render(request, 'dashboard/editPersonalinfo.html', context)
     if request.method=="POST":
-        form  = OHUserUpdateForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            updated_user = form.cleaned_data.get('email')
+        formA= OHUserUpdateForm(request.POST, instance=user)
+        formB= UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if formA.is_valid() and formB.is_valid():
+            formA.save()
+            formB.save()
+            updated_user = formA.cleaned_data.get('email')
             user = updated_user
             messages.success(request, 'The account was successfully updated for ' + updated_user)
             return redirect(f"/profile/{ user_id }")

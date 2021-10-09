@@ -3,6 +3,8 @@
 {{ history }}
 {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content%} 
 <div class="container">
     <div class="row">
@@ -35,10 +37,17 @@
         <div class="col align-self-center">
             <div class="card" style="width: 100%;">
             {% load static %}
-                <img class="card-img-top" src="{% static 'covi_virus.jpg' %}" alt="">
-                <div class="card-body">
-                    <p class="card-text"> <small> ... contributing to public health... </small></p>
-                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form |crispy }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit"> Upload picture </button>
+                            </div>    
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
