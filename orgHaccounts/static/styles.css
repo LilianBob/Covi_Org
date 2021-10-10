@@ -64,6 +64,12 @@ h1 a, h4 a{
 #homeCard{
     margin:auto;
 }
+.text-center .avatar{
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
 ul{
     list-style-type: none;
 }
@@ -104,12 +110,6 @@ hr{
 }
 #dash #profileCards{
     width: 30rem;
-}
-.avatar{
-    max-height: 50px;
-    max-width: 50px;
-    border-radius: 50%;
-    margin: auto;
 }
 #dash .col{
     padding-bottom: 5px;

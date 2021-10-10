@@ -49,6 +49,7 @@ class OrgHUser(AbstractBaseUser):
     )
     avatar= models.ImageField(
         upload_to='profile_images', 
+        default= 'profile_images/default.jpg',
         null=True, 
         blank=True
     )

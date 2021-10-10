@@ -154,7 +154,7 @@ def profile(request, user_id):
     return render(request, 'dashboard/profile.html', context)
 def profile_update(request, user_id):
     user= request.user
-    data = {'email': user.email,'date_of_birth': user.date_of_birth}
+    data = {'email': user.email,'date_of_birth': user.date_of_birth, 'avatar': user.avatar}
     if request.method == 'GET':
         user=user
         form  = OHUserUpdateForm(initial=data)
@@ -164,7 +164,7 @@ def profile_update(request, user_id):
         }
         return render(request, 'dashboard/editPersonalinfo.html', context)
     if request.method=="POST":
-        form  = OHUserUpdateForm(request.POST, instance=user)
+        form  = OHUserUpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             updated_user = form.cleaned_data.get('email')

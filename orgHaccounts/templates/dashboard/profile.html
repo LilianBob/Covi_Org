@@ -17,8 +17,10 @@
             <div class="card" style="width:100%;">
                 <div class="card-body">
                     <p class= "card-title"><h3> Personal Information </h3></p>
-                    <img class="avatar" src="{{ request.user.avatar.url }}" alt="profile">
-                    <p class="card-text"><span> ID: {{ user.id }} </span></p>
+                    <div class="text-center">
+                        <img src="{{ user.avatar.url }}" alt="profile" class="img-responsive avatar" >
+                    </div>
+                    <p class="card-text"><span class="text-center"> ID: {{ user.id }} </span></p>
                     <p class="card-text"> Email: {{ user.email }}</p>
                     <p class="card-text"> Birth Date: {{ user.date_of_birth }} </p>
                     <p class="card-text"> <span> Account created on: {{ user.created_at }} </span></p>
@@ -32,15 +34,6 @@
                         <a href="/password_change" class="btn btn-warning"> Change password </a>
                         <a href="/delete_profile/{{ user.id }}" class="btn btn-warning"> Delete account </a>
                     </p><br>
-                </div>
-            </div>
-        </div>
-        <div class="col align-self-center">
-            <div class="card" style="width: 100%;">
-            {% load static %}
-                <img class="card-img-top" src="{% static 'covi_virus.jpg' %}" alt="">
-                <div class="card-body">
-                    <p class="card-text"> <small> ... contributing to public health... </small></p>
                 </div>
             </div>
         </div>
