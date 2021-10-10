@@ -3,6 +3,8 @@
 {{ history }}
 {% endblock %}
 
+{% load static %}
+
 {% block content%} 
 <div class="container">
     <div class="row">
@@ -14,7 +16,8 @@
         <div class="col align-self-center">
             <div class="card" style="width:100%;">
                 <div class="card-body">
-                    <p class= "card-title"><h3> Personal Profile </h3></p>
+                    <p class= "card-title"><h3> Personal Information </h3></p>
+                    <img class="avatar" src="{{ request.user.avatar.url }}" alt="profile">
                     <p class="card-text"><span> ID: {{ user.id }} </span></p>
                     <p class="card-text"> Email: {{ user.email }}</p>
                     <p class="card-text"> Birth Date: {{ user.date_of_birth }} </p>

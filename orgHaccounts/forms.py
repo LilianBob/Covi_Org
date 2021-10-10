@@ -37,10 +37,10 @@ class RegisterForm(UserCreationForm):
 class OHUserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6', 'type':'text',}),)
     date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6', 'type':'Date','value': '{ user_date_of_birth }'}),)
-    
+    avatar= forms.ImageField(label= 'Picture', widget=forms.ClearableFileInput(attrs={'class':'form-control col-lg-6', 'value': '{ user_avatar }'}),)
     class Meta:
         model=User
-        fields=['email', 'date_of_birth']
+        fields=['email', 'date_of_birth', 'avatar']
 
 class FileUploadForm(forms.ModelForm):
     file = forms.FileField(label= 'File', widget=forms.FileInput(attrs={'class': 'form-control col-lg-6', 'type':'file',}),)
@@ -71,7 +71,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email', 'date_of_birth',]
+        fields = ['email', 'date_of_birth', 'avatar']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -94,7 +94,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'date_of_birth', 'is_active', 'staff', 'admin']
+        fields = ['email', 'password', 'date_of_birth', 'avatar', 'is_active', 'staff', 'admin']
 
     def clean_password(self):
         return self.initial["password"]

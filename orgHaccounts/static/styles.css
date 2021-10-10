@@ -105,6 +105,12 @@ hr{
 #dash #profileCards{
     width: 30rem;
 }
+.avatar{
+    max-height: 50px;
+    max-width: 50px;
+    border-radius: 50%;
+    margin: auto;
+}
 #dash .col{
     padding-bottom: 5px;
 }

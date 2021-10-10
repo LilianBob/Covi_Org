@@ -47,6 +47,11 @@ class OrgHUser(AbstractBaseUser):
     date_of_birth = models.DateField(
         verbose_name='birth date',
     )
+    avatar= models.ImageField(
+        upload_to='profile_images', 
+        null=True, 
+        blank=True
+    )
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
