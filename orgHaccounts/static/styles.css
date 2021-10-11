@@ -133,4 +133,7 @@ p .btn{
     align-content: center;
     text-align: center;
 }
-    
+#posts{
+    display:flex;
+    flex-direction: row;
+}
