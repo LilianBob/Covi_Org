@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.files.images import get_image_dimensions
-from .models import FileUpload, UserAvatar
+from .models import FileUpload
 
 User = get_user_model()
 class RegisterForm(UserCreationForm):
@@ -36,7 +36,7 @@ class RegisterForm(UserCreationForm):
         return cleaned_data
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = UserAvatar
+        model = User
         fields = ['avatar']
 
     def clean_avatar(self):
@@ -44,7 +44,7 @@ class UserProfileForm(forms.ModelForm):
 
         try:
             w, h = get_image_dimensions(avatar)
-            max_width = max_height = 100
+            max_width = max_height = 180
             if w > max_width or h > max_height:
                 raise forms.ValidationError(
                     u'Please use an image that is '
@@ -62,7 +62,7 @@ class UserProfileForm(forms.ModelForm):
 class OHUserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6', 'type':'text',}),)
     date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6', 'type':'Date','value': '{ user_date_of_birth }'}),)
-    avatar= forms.ImageField(label= 'Picture', widget=forms.ClearableFileInput(attrs={'class':'form-control col-lg-6', 'value': '{ user_avatar }'}),)
+    avatar= forms.ImageField(label= 'Picture', widget=forms.ClearableFileInput(attrs={'value': '{ user_avatar }'}),)
     class Meta:
         model=User
         fields=['email', 'date_of_birth', 'avatar']

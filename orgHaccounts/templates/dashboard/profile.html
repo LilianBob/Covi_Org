@@ -14,32 +14,33 @@
         </div>
     </div>
     <div class="row">
-        <div class="col align-self-center">
-            <div class="card" style="width:100%;">
+        <div class="col d-flex align-self-center justify-content-center text-center">
+            <div class="card" style="width:70%;">
                 <div class="card-body">
                     <p class= "card-title"><h3> Personal Information </h3></p>
-                    <div class="text-center">
+                    <!-- <div class="text-center"> -->
                         <img src="{{ user.avatar.url }}" alt="profile" class="img-responsive avatar" >
-                    </div>
-                    <p class="card-text"><span class="text-center"> ID: {{ user.id }} </span></p>
-                    <p class="card-text"> Email: {{ user.email }}</p>
-                    <p class="card-text"> Birth Date: {{ user.date_of_birth }} </p>
-                    <p class="card-text"> <span> Account created on: {{ user.created_at }} </span></p>
-                    <p class="card-text"> <span> Last log in: {{ user.last_login }} </span></p>
-                    <p class="card-text">
-                        <a href="/file_upload/{{ user.id }}" class="btn btn-primary"> Upload and view files </a> 
-                        <a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }} </a>
-                    </p> 
-                    <p>
-                        <a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit profile </a>
-                        <a href="/password_change" class="btn btn-warning"> Change password </a>
-                        <a href="/delete_profile/{{ user.id }}" class="btn btn-warning"> Delete account </a>
-                    </p><br>
+                        <p class="card-text"><span class="text-center"> ID: {{ user.id }} </span></p>
+                        <p class="card-text"> Email: {{ user.email }}</p>
+                        <p class="card-text"> Birth Date: {{ user.date_of_birth }} </p>
+                        <p class="card-text"> <span> Account created on: {{ user.created_at }} </span></p>
+                        <p class="card-text"> <span> Last log in: {{ user.last_login }} </span></p>
+                        <p class="card-text">
+                            <a href="/file_upload/{{ user.id }}" class="btn btn-primary"> Upload and view files </a> 
+                            <a href="#reportinghistory" class="btn btn-primary"> View your reports </a> 
+                            <a href="/feed" class="btn btn-primary"> Updates on {{ health_condition }} </a>
+                        </p> 
+                        <p>
+                            <a href="/edit/{{ user.id }}" class="btn btn-primary"> Edit profile </a>
+                            <a href="/password_change" class="btn btn-warning"> Change password </a>
+                            <a href="/delete_profile/{{ user.id }}" class="btn btn-warning"> Delete account </a>
+                        </p><br>
+                    <!-- </div>     -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="reportinghistory">
         <div class="col align-self-center">
             <div class="card" style="width:100%;">
             {% if user.screenAnswers %} 

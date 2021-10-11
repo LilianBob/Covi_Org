@@ -17,8 +17,7 @@ Edit Personal Information
             <p class="display-4"> Edit Profile </p>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ formB|crispy }}
-                {{ formA|crispy }}
+                {{ form|crispy }}
                 <div class="row">
                     <div class="col">
                         <div class="form-group">

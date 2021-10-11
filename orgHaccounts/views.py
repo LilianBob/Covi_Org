@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
 from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm, UserProfileForm
 from django.contrib import messages
-from .models import FileUpload, User, ScreenAnswer, UserAvatar, VaccineResponse, NewsPost, Comment, Like 
+from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
 
 User= get_user_model()
 
