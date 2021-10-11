@@ -86,10 +86,6 @@ class OrgHUser(AbstractBaseUser):
         "Is the user a admin member?"
         return self.admin
 
-# class UserAvatar(models.Model):
-#     user= models.OneToOneField(User, on_delete=models.CASCADE)
-#     avatar= models.ImageField(upload_to='profile_images', default='default.jpg')
-
 class ScreenAnswer(models.Model):
     answer= models.CharField(max_length=25)
     user= models.ForeignKey(User, related_name="screenAnswers", on_delete=models.SET_NULL, null=True)

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 import requests
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as OHlogin, authenticate as OHauthenticate, logout as OHlogout
-from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm, UserProfileForm
+from .forms import RegisterForm, AuthenticationForm, OHUserUpdateForm, UserDeleteForm, FileUploadForm
 from django.contrib import messages
 from .models import FileUpload, User, ScreenAnswer, VaccineResponse, NewsPost, Comment, Like 
 
@@ -146,27 +146,12 @@ def file_upload(request, user_id):
 
 def profile(request, user_id):
     user= request.user
-    form= UserProfileForm()
-    if request.method == "GET":
-        context={
-            "history": "Personal Information",
-            "health_condition": "Covid-19",
-            "user": user,
-            "form": form
-        }
-        return render(request, 'dashboard/profile.html', context)
-    if request.method=="POST":
-        form= UserProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            updated_avatar = form.clean_avatar.get('avatar')
-            user.avatar= updated_avatar
-            messages.success(request, 'The picture was successfully updated for ' + user)
-            return redirect(f"/profile/{ user_id }")
-    messages.error(request, 'Errors occured while processing your request')
-    form  = UserProfileForm()
-    context = {'form': form}
-    return render (request, 'dashboard/profile.html', context)
+    context={
+        "history": "Personal Information",
+        "health_condition": "Covid-19",
+        "user": user,
+    }
+    return render(request, 'dashboard/profile.html', context)
 def profile_update(request, user_id):
     user= request.user
     data = {'email': user.email,'date_of_birth': user.date_of_birth, 'avatar': user.avatar}

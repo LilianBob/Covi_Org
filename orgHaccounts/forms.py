@@ -34,31 +34,6 @@ class RegisterForm(UserCreationForm):
         if password1 is not None and password1 != password2:
             self.add_error("password2", "The given  passwords do not match!")
         return cleaned_data
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['avatar']
-
-    def clean_avatar(self):
-        avatar = self.cleaned_data['avatar']
-
-        try:
-            w, h = get_image_dimensions(avatar)
-            max_width = max_height = 180
-            if w > max_width or h > max_height:
-                raise forms.ValidationError(
-                    u'Please use an image that is '
-                    '%s x %s pixels or smaller.' % (max_width, max_height))
-            main, sub = avatar.content_type.split('/')
-            if not (main == 'image' and sub in ['jpeg', 'gif', 'png', 'jpg']):
-                raise forms.ValidationError(u'Please use a JPEG, '
-                    'GIF, JPG or PNG image.')
-            if len(avatar) > (20 * 1024):
-                raise forms.ValidationError(
-                    u'Avatar file size may not exceed 20k.')
-        except AttributeError:
-            pass
-        return avatar
 class OHUserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label= 'Email address', widget=forms.TextInput(attrs={'class': 'form-control col-lg-6', 'type':'text',}),)
     date_of_birth = forms.DateField(label= 'Birth Date', widget=forms.DateInput(format=('%d-%m-%Y'), attrs={'class':'form-control col-lg-6', 'type':'Date','value': '{ user_date_of_birth }'}),)
