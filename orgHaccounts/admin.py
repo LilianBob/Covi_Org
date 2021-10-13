@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.contrib.auth import get_user_model
+# from django_markdown.admin import MarkdownModelAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, FileUpload, ScreenAnswer, VaccineResponse,NewsPost, Comment, Like
 from .forms import UserAdminCreationForm, UserAdminChangeForm
@@ -45,6 +46,12 @@ class ScreenAnswerAdmin(admin.ModelAdmin):
 @admin.register(NewsPost, site=admin_site)
 class NewsPostAdmin(admin.ModelAdmin):
     list_display=("intro", "title", "newscover", "description", "postContent", "creator")
+# class MypostContent(NewsPost):
+#     class Meta:
+#         proxy = True
+# @admin.register(MypostContent, site=admin_site)
+# class MypostContentAdmin(MarkdownModelAdmin):
+#     list_display=("postContent")
 @admin.register(Like, site=admin_site)
 class LikeAdmin(admin.ModelAdmin):
     list_display=("newsPost", "alreadyLiked", "user")

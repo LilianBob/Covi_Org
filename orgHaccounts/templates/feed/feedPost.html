@@ -4,6 +4,8 @@
 Covid-19  News
 {% endblock %}
 
+{% load markdown_extras %}
+
 {% block content %}
     {% for newsPost in all_newsPosts %}
     <div class="container">
@@ -15,12 +17,12 @@ Covid-19  News
         <div class="row" id="posts">
             <div class="col-lg-6">
                 <div class="card">
-                    <p><b> {{ newsPost.intro }}</b></p>
+                    <p><b> {{ newsPost.intro | new_markdown | safe }}</b></p>
                     <p> {{ newsPost.created_at }} </p>
                     <img class="card-img-top" src="{{ newsPost.newscover.url }}" alt="Card image">
                     <div class="card-body">
-                        <h5 class="card-title"> {{ newsPost.title }} </h5>
-                        <p class="card-text"> {{ newsPost.description }}</p> <br>
+                        <h5 class="card-title"> {{ newsPost.title | new_markdown | safe }} </h5>
+                        <p class="card-text"> {{ newsPost.description | new_markdown | safe }}</p> <br>
                         <P class="card-text"><span><a href="/news_postContent/{{ newsPost.id }}"> Continue reading&rarr; </a></span></P> 
                         {% if user in newsPost.user_likes.all %}
                             <span><form action="/like/{{ newsPost.id }}" method="post" name="like" id="likeform">

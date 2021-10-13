@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from orgHaccounts.admin import admin_site
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy, get_resolver
 from django.contrib.auth import views as auth_views
-from django.urls import reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
+get_resolver(None)
 
 urlpatterns = [
-    path('', include ('orgHaccounts.urls')),
+    path('', include('orgHaccounts.urls')),
     path('oHadmin/', admin_site.urls),
     path(
         'password_reset/',

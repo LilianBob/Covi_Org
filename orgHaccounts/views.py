@@ -200,8 +200,8 @@ def feed(request):
     return render(request, 'feed/feedPost.html', context)
 def newsPost(request):
     if request.user.is_staff and not None:
-        return redirect("/admin/orgHaccounts/newspost/")
-    return redirect("/admin/orgHaccounts/newspost/")
+        return redirect("/oHadmin/orgHaccounts/newspost/")
+    return redirect("/oHadmin/orgHaccounts/newspost/")
 def add_newsPost(request):
     if request.session == "POST":
         creator= User.objects.get(id=request.session['user_id'])

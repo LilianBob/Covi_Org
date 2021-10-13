@@ -2,15 +2,17 @@
 {% block title %} 
 Covid-19  News: {{ newsPost.title }}
 {% endblock %}
-{% block content%} 
 
+{% load markdown_extras %}
+
+{% block content%} 
 <div class="container">
     <div class="row">
         <div class="col">
             {% for newsPost in  all_newsPosts %} 
             <div class="card" style="width: 100%;">
                 <div class="card-body">
-                    <p class="card-text">  {{ newsPost.postContent }}</p> <br>
+                    <p class="card-text">  {{ newsPost.postContent | new_markdown | safe }}</p> <br>
                     <div class="card" style="width: 25%">
                     {% if user.is_authenticated %}
                         <form action="/comment/{{ newsPost.id }}" method="post" name="comment" id="commentform">
