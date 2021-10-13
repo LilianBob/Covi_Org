@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from orgHaccounts.admin import admin_site
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
@@ -22,7 +23,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include ('orgHaccounts.urls')),
-    path('admin/', admin.site.urls),
+    path('oHadmin/', admin_site.urls),
     path(
         'password_reset/',
         auth_views.PasswordResetView.as_view(success_url=reverse_lazy('password_reset_done')),
