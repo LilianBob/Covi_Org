@@ -8,7 +8,7 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 class OrgHUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, date_of_birth, password):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -20,18 +20,17 @@ class OrgHUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_staffuser(self, email, date_of_birth, password):
-        user = self.create_user(
-            email,
-            password=password,
-            date_of_birth=date_of_birth,
+    def create_staffuser(self, email):
+        user = User.objects.get(
+            email=email
         )
         user.staff = True
         user.save(using=self._db)
         return user
     def create_superuser(self, email, password):
         user = self.create_user(
-            email,
+            email=email,
+            date_of_birth=None,
             password=password,
         )
         user.staff = True
@@ -67,24 +66,15 @@ class OrgHUser(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-    def get_full_name(self):
-        return self.email
-    def get_short_name(self):
-        return self.email
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
         return True
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
         return True
-
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
         return self.staff
     @property
     def is_admin(self):
-        "Is the user a admin member?"
         return self.admin
 
 class ScreenAnswer(models.Model):
