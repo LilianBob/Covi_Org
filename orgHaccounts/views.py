@@ -213,8 +213,11 @@ def add_newsPost(request):
                 return redirect("/newsPost")
         title = request.POST['title']
         intro= request.POST['intro']
+        newscover =NewsPost(request.POST, request.FILES.get('newscover'))
+        newscover.save()
+        description=newsPost_description
         postContent= request.POST['postContent']
-        NewsPost.objects.create(intro=intro, title= title, postContent= postContent, description=newsPost_description, creator=creator)
+        NewsPost.objects.create(intro=intro, title= title, newscover=newscover, postContent= postContent, description=description, creator=creator)
         messages.success(request, "Post successfully created!")
     return redirect ("/feed")
 def add_like(request, newsPost_id):

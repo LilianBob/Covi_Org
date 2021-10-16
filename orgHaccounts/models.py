@@ -78,14 +78,14 @@ class OrgHUser(AbstractBaseUser):
         return self.admin
 
 class ScreenAnswer(models.Model):
-    answer= models.CharField(max_length=25)
+    answer= models.CharField(max_length=3)
     user= models.ForeignKey(User, related_name="screenAnswers", on_delete=models.SET_NULL, null=True)
     created_at= models.DateTimeField(auto_now_add=True, null=True)
     updated_at= models.DateTimeField(auto_now=True, null=True)
 
 class VaccineResponse(models.Model):
     vaccine_type= models.CharField(max_length=25) 
-    vaccine_dose= models.CharField(max_length=25) 
+    vaccine_dose= models.CharField(max_length=8) 
     date_received = models.DateField(verbose_name='Vaccination date',)
     vaccine_location= models.CharField(max_length=25)
     vaccine_illness= models.TextField(max_length=1000)
@@ -114,7 +114,7 @@ class NewsPost(models.Model):
     title = models.CharField(max_length=255)
     description= models.TextField()
     likes = models.PositiveIntegerField(default=0)
-    user_likes = models.ManyToManyField(User, related_name='liked_newsposts')
+    # user_likes = models.ManyToManyField(User, related_name='liked_newsposts')
     postContent= models.TextField()
     creator = models.ForeignKey(User, related_name='newsPosts', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
