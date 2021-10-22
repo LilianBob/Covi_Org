@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url, django_heroku
 from django.conf import settings
 from decouple import config
 
@@ -15,8 +16,9 @@ SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['orghealth.herokuapp.com']
 
 
 # Application definition
@@ -38,12 +40,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Covid_Orgstate.urls'
@@ -70,10 +74,16 @@ WSGI_APPLICATION = 'Covid_Orgstate.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 
+        'django.db.backends.sqlite3',
+        # 'django.db.backends.postgresql_psycopg2',
         'NAME': BASE_DIR / 'db.sqlite3',
+    #    'NAME': "orgh"
     }
 }
+
+prod_db  =  dj_database_url.config(conn_max_age=400)
+DATABASES['default'].update(prod_db)
 
 AUTHENTICATION_BACKENDS=[
     'orgHaccounts.backends.EmailBackend', 
@@ -114,16 +124,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -132,3 +140,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL ='/dashboard'
 LOGOUT_REDIRECT_URL= '/'
+
+django_heroku.settings(locals())
