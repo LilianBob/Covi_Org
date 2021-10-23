@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.jumbotron-fluid{ 
+    position: relative; 
+    display: block;
+    align-items: center;
+}
+    
+.jumbotron-fluid:before{  
+    content: "";
+    background: url("covi_virus.jpg") no-repeat center center;
+    background-size: contain;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+}
+
+.jumbotron-fluid h4, .jumbotron-fluid h3, .jumbotron-fluid p{
+    position:relative
+}
+h1, h4, h3, a, h6{
+    text-align: center;
+}
+h1 a, h4 a{
+    color: rgb(46, 44, 44);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.jumbotron-fluid .container .row{
+    padding: 40px;
+}
+#signIn{
+    display: flex;
+    justify-content:right;
+}
+.navbar-nav{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 0;
+}
+.navbar-nav .nav-item a{
+    font-family: cursive;
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+}
+#wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.container{
+    display: block;
+    margin:auto;
+    padding:20px;
+}
+#homeCard{
+    margin:auto;
+}
+.text-center .avatar{
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+ul{
+    list-style-type: none;
+}
+.scrollable{
+    max-height: 300px;
+    overflow-y: auto;
+} 
+
+hr{
+    border: 2px solid rgb(97, 94, 94);
+    width: 25%;
+    float: left;
+}
+#dash{
+    display: flex;
+    padding-top: 50px;
+
+}
+.card{
+    display:block;
+    padding:5px;
+    background-color: rgb(233, 213, 188);
+}
+.row{
+    padding: 10px;
+}
+.card-body a, .card-title p, .card-text a, .card .btn{
+    margin-bottom: 3px;
+    text-align: center;
+    align-content: center;
+}
+.card-title{
+    background-color : rgba(170, 165, 165, 0.815);
+    text-align: center;
+}
+.card-body #status{
+    overflow-y: auto;
+}
+#dash #profileCards{
+    width: 30rem;
+}
+#dash .col{
+    padding-bottom: 5px;
+}
+#statuswrapper{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn .btn-default{
+    color: black;
+    text-align: center;
+    padding:2em;
+    background-color: #1e96f1;
+}
+.btn .btn-primary{
+    text-align: center;
+    padding:2em;
+}
+p .btn{
+    align-content: center;
+    text-align: center;
+}
+#posts{
+    display:flex;
+    flex-direction: row;
+}

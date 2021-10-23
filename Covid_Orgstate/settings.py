@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'Covid_Orgstate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 
-        #'django.db.backends.sqlite3'#
-        'django.db.backends.postgresql_psycopg2',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': "orgh"
+        'django.db.backends.sqlite3',
+        #'django.db.backends.postgresql_psycopg2',#
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': "orgh"
     }
 }
 
@@ -133,7 +133,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR/ 'orgHaccounts/static',
+    BASE_DIR/ 'static',
     BASE_DIR / 'media'
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
