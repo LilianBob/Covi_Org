@@ -7,6 +7,7 @@ Covid-19  News
 {% load markdown_extras %}
 
 {% block content %}
+{% if all_newsPosts %}
     {% for newsPost in all_newsPosts %}
     <div class="container">
         <div class="row">
@@ -54,4 +55,7 @@ Covid-19  News
         </div>
     </div>
     {% endfor %}
+{% else %}
+    <h1> No posts yet...Come back later </h1>
+{% endif %}
 {% endblock %}
