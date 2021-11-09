@@ -18,6 +18,7 @@
             <div class="card" style="width:70%;">
                 <div class="card-body">
                     <p class= "card-title"><h3> Personal Information </h3></p>
+                    {% load static %}
                     <img src="{{ user.avatar.url }} | default: {% static 'default.jpg' %}" alt="profile" class="img-responsive avatar" > <br>
                     <p class="card-text"><span class="text-center"> ID: {{ user.id }} </span></p>
                     <p class="card-text"> Email: {{ user.email }}</p>
