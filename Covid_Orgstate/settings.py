@@ -16,8 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'orghealth.herokuapp.com',
@@ -138,13 +138,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'media/profile_images'),
     os.path.join(BASE_DIR, 'media/news_images'),
 )
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = (
-#     BASE_DIR /'static',
-#     BASE_DIR /'media/profile_images',
-#     BASE_DIR /'media/news_images',
-# )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
