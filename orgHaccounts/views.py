@@ -94,8 +94,8 @@ def screened(request):
 def vaccine_reporting(request):
     if request.method == "GET":
         r= requests.get("https://www.vaccinespotter.org/api/v0/states/WA.json")
-        r=r.json()
-        features= r['features']
+        k=r.json()
+        features= k['features']
     context={
         "location":features,
         "pfizer": "Pfizer-BioNTech",
