@@ -55,7 +55,8 @@ Covid-19  News
         </div>
     </div>
     {% endfor %}
-{% else %}
+{% endif %}
+{% if not all_newsPosts %}
     <h1> No posts yet...Come back later </h1>
 {% endif %}
 {% endblock %}
