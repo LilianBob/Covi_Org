@@ -94,19 +94,22 @@ def screened(request):
 def vaccine_reporting(request):
     if request.method == "GET":
         r= requests.get("https://www.vaccinespotter.org/api/v0/states/WA.json")
-        k=r.json()
-        features= k['features']
-    context={
-        "location":features,
-        "pfizer": "Pfizer-BioNTech",
-        "moderna": "Moderna",
-        "janssen": "Johnson & Johnson’s Janssen",
-        "unknown": "Unknown",
-        "1st": "1st",
-        "2nd": "2nd",
-        "3rd": "3rd",
-    }
-    return render (request, 'dashboard/vaccine_report.html', context)
+        r.raise_for_status()
+        if r.status_code == 200:
+            k=r.json()
+            features= k['features']
+            context={
+                "location":features,
+                "pfizer": "Pfizer-BioNTech",
+                "moderna": "Moderna",
+                "janssen": "Johnson & Johnson’s Janssen",
+                "unknown": "Unknown",
+                "1st": "1st",
+                "2nd": "2nd",
+                "3rd": "3rd",
+            }
+            return render (request, 'dashboard/vaccine_report.html', context)
+
 def vreported(request):
     if request.method== "POST":
         vaccine_type= request.POST['vaccine_type']
