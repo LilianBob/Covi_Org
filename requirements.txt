@@ -39,7 +39,8 @@ mccabe==0.6.1
 nest-asyncio==1.5.1
 parso==0.8.2
 pickleshare==0.7.5
-Pillow==8.4.0
+Pillow==9.0.0
+pipenv==2021.11.15
 platformdirs==2.4.0
 prompt-toolkit==3.0.21
 protobuf==3.19.0
@@ -50,7 +51,7 @@ Pygments==2.10.0
 python-dateutil==2.8.2
 python-decouple==3.5
 pytz==2021.3
-# pywin32==302
+pywin32==302
 pyzmq==22.3.0
 requests==2.26.0
 six==1.16.0
@@ -60,6 +61,8 @@ tornado==6.1
 traitlets==5.1.0
 typing-extensions==3.10.0.2
 urllib3==1.26.7
+virtualenv==20.10.0
+virtualenv-clone==0.5.7
 wcwidth==0.2.5
 whitenoise==5.3.0
 wrapt==1.13.2
