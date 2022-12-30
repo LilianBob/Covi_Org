@@ -5,8 +5,8 @@ from .models import OrgHUser, ScreenAnswer, VaccineResponse, NewsPost
 User = get_user_model()
 
 class OrgHUserTestCase(TestCase):
-    def create_user(self, email="licell@gmail.com", date_of_birth="2021-10-15", password="testT6789"):
-        return User.objects.create(email=email, date_of_birth=date_of_birth, password="password")
+    def create_user(self, email="licell@gmail.com", password="testT6789"):
+        return User.objects.create(email=email, password="password")
     def test_create_user(self):
         myuser = self.create_user()
         self.assertTrue(isinstance(myuser, OrgHUser))
@@ -15,7 +15,7 @@ class OrgHUserTestCase(TestCase):
 class ScreenAnswerTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        test_user = User.objects.create_user(email="licell@gmail.com", date_of_birth="2021-10-15", password="testT6789")
+        test_user = User.objects.create_user(email="licell@gmail.com", password="testT6789")
         ScreenAnswer.objects.create(
             answer='Yes',
             user= test_user
@@ -29,7 +29,7 @@ class ScreenAnswerTestCase(TestCase):
 class VaccineResponseTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        test_user = User.objects.create_user(email="licell@gmail.com", date_of_birth="2021-10-15", password="testT6789")
+        test_user = User.objects.create_user(email="licell@gmail.com", password="testT6789")
         VaccineResponse.objects.create(
             vaccine_type='pfizer_biontech',
             vaccine_dose='1',
@@ -51,7 +51,7 @@ class VaccineResponseTestCase(TestCase):
 class NewsPostTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        test_user = User.objects.create_user(email="licell@gmail.com", date_of_birth="2021-10-15", password="testT6789")
+        test_user = User.objects.create_user(email="licell@gmail.com", password="testT6789")
         test_user.staff = True
         test_user.save()
         NewsPost.objects.create(

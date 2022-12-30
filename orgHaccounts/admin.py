@@ -16,17 +16,17 @@ admin_site = OHAdminSite(name='oHadmin')
 class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
-    list_display = ['email', 'date_of_birth', 'avatar', 'staff', 'admin']
+    list_display = ['email', 'avatar', 'staff', 'admin']
     list_filter = ['admin']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth', 'avatar')}),
+        ('Personal info', {'fields': ('avatar')}),
         ('Permissions', {'fields': ('admin',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'date_of_birth', 'avatar', 'password1', 'password2')}
+            'fields': ('email', 'avatar', 'password1', 'password2')}
         ),
     )
     search_fields = ['email']

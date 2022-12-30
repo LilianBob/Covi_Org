@@ -43,7 +43,7 @@ Vaccine Reporting
                             <label for="vaccine_location"> Vaccination site: </label>
                             <select name="vaccine_location" type="select" class="md-select form-control" id="choicefields" searchable="Search here..">
                             {% for i in location %}
-                                <option value="{{ i.properties.provider }}"> {{ i.properties.provider }}, {{ i.properties.city }} | {{ i.properties.address}}</option>
+                                <option value="{{ i.loc_name }}"> {{ i.loc_name }}, {{ i.loc_admin_street1 }} | {{ i.loc_admin_city}} , {{ i.loc_admin_state}}</option>
                             {% endfor %}
                             </select>
                         </div>

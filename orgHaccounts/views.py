@@ -93,13 +93,14 @@ def screened(request):
 
 def vaccine_reporting(request):
     if request.method == "GET":
-        r= requests.get("https://www.vaccinespotter.org/api/v0/states/WA.json")
+        r= requests.get("https://data.cdc.gov/resource/5jp2-pgaw.json?loc_admin_state=WA")
         r.raise_for_status()
         if r.status_code == 200:
             k=r.json()
-            features= k['features']
+            # features= k['loc_name']
             context={
-                "location":features,
+                "location": k,
+                # "location":features,
                 "pfizer": "Pfizer-BioNTech",
                 "moderna": "Moderna",
                 "janssen": "Johnson & Johnson’s Janssen",
@@ -109,6 +110,8 @@ def vaccine_reporting(request):
                 "3rd": "3rd",
             }
             return render (request, 'dashboard/vaccine_report.html', context)
+        elif r.status_code == 404:
+            return render("Result not found!")
 
 def vreported(request):
     if request.method== "POST":
@@ -157,7 +160,7 @@ def profile(request, user_id):
     return render(request, 'dashboard/profile.html', context)
 def profile_update(request, user_id):
     user= request.user
-    data = {'email': user.email,'date_of_birth': user.date_of_birth, 'avatar': user.avatar}
+    data = {'email': user.email, 'avatar': user.avatar}
     if request.method == 'GET':
         user=user
         form= OHUserUpdateForm(initial=data)

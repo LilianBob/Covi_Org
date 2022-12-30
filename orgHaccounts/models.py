@@ -1,20 +1,19 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
+    BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
 class OrgHUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password):
+    def create_user(self, email, password):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            email=self.normalize_email(email)
         )
 
         user.set_password(password)
@@ -29,23 +28,19 @@ class OrgHUserManager(BaseUserManager):
         return user
     def create_superuser(self, email, password):
         user = self.create_user(
-            email=email,
-            date_of_birth=None,
-            password=password,
+            email,
+            password
         )
         user.staff = True
         user.admin = True
         user.save(using=self._db)
         return user
 
-class OrgHUser(AbstractBaseUser):
+class OrgHUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
-    )
-    date_of_birth = models.DateField(
-        verbose_name='birth date',
     )
     avatar= models.ImageField(
         upload_to='profile_images', 
@@ -62,7 +57,7 @@ class OrgHUser(AbstractBaseUser):
     objects = OrgHUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
+
 
     def __str__(self):
         return self.email
