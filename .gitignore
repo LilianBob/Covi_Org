@@ -9,10 +9,12 @@ db.sqlite3-journal
 media
 
 .env
+.pem
+orgH.pem
 
 # If running collectstatic, no need to include staticfiles/
-# in your Git repository. Update and uncomment the following line accordingly.
-Covid_orgstate/staticfiles/
+# # in your Git repository. Update and uncomment the following line accordingly.
+# Covid_orgstate/staticfiles/
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
